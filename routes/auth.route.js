@@ -1,11 +1,12 @@
 // routes/auth.js
 const express = require('express');
-const bcrypt = require('bcrypt');
+const hashHelper = require(process.cwd() +'/helpers/password-encrypter')
 const jwt = require('jsonwebtoken');
 const db = require('../models/index.js');
 const router = express.Router();
+const authController = require('../controllers/auth')
 
-const Users = db.Users;
+const User = db.User;
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -15,16 +16,16 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     console.log(email, password);
 
-    const user = await Users.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
 
     if (!user) {
       return res.status(404).json({ message: 'Email not found' });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await hashHelper.compare(hashHelper.hash(password), user.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid password' });
+      return res.status(401).json({ message: 'Invalid password' , password : hashHelper.hash(password), password2 : user.password});
     }
 
     // Tạo token sử dụng jsonwebtoken
@@ -38,5 +39,7 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+router.post('/register', authController.register)
 
 module.exports = router;
