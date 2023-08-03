@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
             telephone : DataTypes.CHAR,
             address : DataTypes.STRING,
             avatar_url : DataTypes.STRING,
-            password: DataTypes.CHAR,
+            password: DataTypes.CHAR(60),
             is_admin: DataTypes.BOOLEAN,
             // deletedAt: {
             //     type: DataTypes.DATE,
