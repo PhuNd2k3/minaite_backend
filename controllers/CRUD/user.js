@@ -46,7 +46,6 @@ async function showById(id) {
 }
 
 async function showByEmail(email) {
-    console.log(email);
     return models.User.findOne({ include: include, where: { email: email } })
 }
 

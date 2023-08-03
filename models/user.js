@@ -21,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
                     isEmail: true,
                 },
             },
-            telephone : DataTypes.CHAR,
+            telephone : DataTypes.CHAR(10),
             address : DataTypes.STRING,
             avatar_url : DataTypes.STRING,
-            password: DataTypes.CHAR,
+            password: DataTypes.CHAR(60),
             is_admin: DataTypes.BOOLEAN,
             // deletedAt: {
             //     type: DataTypes.DATE,

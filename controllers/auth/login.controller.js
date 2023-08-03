@@ -9,7 +9,6 @@ async function login(req, res){
     const { email, password } = req.body;
     
     const user = await getUserByEmail(email);
-    console.log(email, hashHelper.hash(password), user.password);
 
     if (!user) {
       return res.status(404).json({ message: "Email not found" });
