@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
                     isEmail: true,
                 },
             },
-            telephone : DataTypes.CHAR,
+            telephone : DataTypes.CHAR(10),
             address : DataTypes.STRING,
             avatar_url : DataTypes.STRING,
             password: DataTypes.CHAR(60),
