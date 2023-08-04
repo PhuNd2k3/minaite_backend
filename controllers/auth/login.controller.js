@@ -16,7 +16,7 @@ async function login(req, res){
 
     const isPasswordValid = await hashHelper.compare(
       password,
-      user.password
+      user.password.trim()
     );
 
     if (!isPasswordValid) {
