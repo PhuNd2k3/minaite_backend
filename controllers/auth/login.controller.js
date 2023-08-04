@@ -38,7 +38,10 @@ async function login(req, res){
       }
     );
 
-    res.json({ token });
+    res.json({ 
+      token,
+      message: "Login successful!"
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error", email: req.body.email });
