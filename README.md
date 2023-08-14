@@ -23,7 +23,9 @@ yarn sequelize-cli model:generate --name User --attributes firstName:string,last
 
 npx sequelize-cli migration:generate --name demo-user
 
--> 
+-> using yarn
+
+yarn sequelize-cli migration:generate --name demo-user
 
 -   Chạy migrations:
 
@@ -61,11 +63,11 @@ yarn sequelize-cli seed:generate --name demo-user
 
 -> using npm
 
-npx sequelize-cli db:seed:all/seeder's name
+npx sequelize-cli db:seed:all
 
 -> using yarn
 
-yarn sequelize-cli db:seed:all/seeder's name
+yarn sequelize-cli db:seed:all
 
 -   Undo seeder:
 

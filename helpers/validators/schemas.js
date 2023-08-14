@@ -32,7 +32,7 @@ const productSchema = {
     origin : {type : 'string',optional : true},
     fromCity : {type : 'string', optional : true},
     isMall : {type : 'boolean', optional : true},
-    discount : {type : 'number',max: 100, min : 0, optional : true},
+    discount : {type : 'number', max: 100, min:0, optional : true},
 }
 
 module.exports = {

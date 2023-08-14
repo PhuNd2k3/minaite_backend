@@ -1,5 +1,73 @@
-const validators = require(process.cwd() + '/helpers/validators')
+const validators = Require(process.cwd() + "/helpers/validators");
 
-const {index, getCategoryById, addNewCategory, updateCategoryById, softDeleteUserById} = require('../CRUD/category')
+const {
+    getListCategory,
+    getCategoryById,
+    addNewCategory,
+    updateCategoryById,
+    softDeleteUserById,
+} = Require("../CRUD/category");
 
+async function index(request, response) {
+    try {
+        
+    } catch (error) {
+        return response.status(500).json({
+            message: 'Something went wrong!',
+            error: error,
+        })
+    }
+}
 
+async function showById(request, response) {
+    try {
+        
+    } catch (error) {
+        return response.status(500).json({
+            message: 'Something went wrong!',
+            error: error,
+        })
+    }
+}
+
+async function create(request, response) {
+    try {
+        
+    } catch (error) {
+        return response.status(500).json({
+            message: 'Something went wrong!',
+            error: error,
+        })
+    }
+}
+
+async function updateById(request,response)
+{
+    try {
+        
+    } catch (error) {
+        return response.status(500).json({
+            message: 'Something went wrong!',
+            error: error,
+        })
+    }
+}
+
+async function softDeleteById(request,response)
+{
+    try {
+        
+    } catch (error) {
+        return response.status(500).json({
+            message: 'Something went wrong!',
+            error: error,
+        })
+    }
+}
+
+module.exports = {
+    index : index,
+    showById : showById,
+    create : create,
+
+}

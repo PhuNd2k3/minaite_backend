@@ -1,10 +1,27 @@
 const { Op } = require('sequelize')
 const models = require(process.cwd() + '/models')
 const { getCurrentDateTime } = require(process.cwd() + '/helpers/datetime')
+const objectCleaner = require(process.cwd() + '/helpers/object-cleaner')
 
-async function index()
+async function index(startIndex, limit, params)
 {
-    return models.Category.findAndCountAll()
+    const selection = objectCleaner.clean({
+        name : { [Op.like] : `%${params.txt_search}%`},
+        deletedAt : {
+            [Op.between] : [params.deleteFrom_date, params.deleteTo_date]
+        }
+    })
+    return models.Category.findAndCountAll(
+        objectCleaner.clean({
+            offset : Number.isNaN(startIndex) ? null : startIndex,
+            limit : Number.isNaN(limit) ? null : limit,
+            order : [
+                ['id', 'DESC'],
+                ['name', 'ASC']
+            ],
+            where : selection,
+        })
+    )
 }
 
 async function showById(id) {
@@ -22,15 +39,14 @@ async function update(newCategory, id) {
 async function destroy(id) {
     const now = getCurrentDateTime()
 
-    // Update deletedAt field of user
-    const updateUser = {
+    const updateCategory = {
         deletedAt: now,
     }
-    await update(updateUser, id)
+    await update(updateCategory, id)
 }
 
 module.exports = {
-    index : index,
+    getListCategory : index,
     getCategoryById: showById,
     addNewCategory: create,
     updateCategoryById: update,
