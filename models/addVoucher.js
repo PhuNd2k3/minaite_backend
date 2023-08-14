@@ -12,6 +12,15 @@ module.exports = (sequelize, DataTypes) => {
         {
             voucher_id: DataTypes.INTEGER,
             bill_id : DataTypes.INTEGER,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {

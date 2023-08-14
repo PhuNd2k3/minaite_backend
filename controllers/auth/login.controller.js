@@ -1,13 +1,12 @@
+const hashHelper = require(process.cwd() + "/helpers/password-encrypter");
+const jwt = require("jsonwebtoken");
 
-const hashHelper = require(process.cwd() +'/helpers/password-encrypter')
-const jwt = require('jsonwebtoken');
+const { getUserByEmail } = require("../CRUD/user");
 
-const { getUserByEmail } = require('../CRUD/user')
-
-async function login(req, res){
+async function login(req, res) {
   try {
     const { email, password } = req.body;
-    
+
     const user = await getUserByEmail(email);
 
     if (!user) {
@@ -20,13 +19,9 @@ async function login(req, res){
     );
 
     if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({
-          message: "Invalid password",
-          password: hashHelper.hash(password),
-          password2: user.password,
-        });
+      return res.status(401).json({
+        message: "Invalid password",
+      });
     }
 
     // Tạo token sử dụng jsonwebtoken
@@ -38,12 +33,14 @@ async function login(req, res){
       }
     );
 
-    res.json({ token });
+    res.json({ 
+      message: "login success!!" ,
+      token
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
-};
+}
 
-
-module.exports = login
+module.exports = login;

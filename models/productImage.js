@@ -10,7 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     ProductImage.init(
         {
             product_id: DataTypes.INTEGER,
-            image_url : DataTypes.STRING,
+            image : DataTypes.STRING,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {

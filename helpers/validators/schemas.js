@@ -10,6 +10,34 @@ const userSchema = {
     is_admin: { type: 'boolean', optional: true },
 }
 
+const walletSchema = {
+    user_id : {type : 'number'},
+    shopee_pay_money : {type : 'number', min : 0},
+}
+
+const categorySchema = {
+    name : {type : 'string'},
+    image : {type : 'string'}
+}
+
+const productSchema = {
+    category_id : {type : 'number', optional : true},
+    product_name : {type : 'string'},
+    price : {type : 'number'},
+    description : {type : 'string', optional : true},
+    likes : {type : 'number', optional : true},
+    star : {type : 'number', optional : true},
+    quan_sold : {type : 'number', optional : true},
+    quan_in_stock : {type : 'number'},
+    origin : {type : 'string',optional : true},
+    fromCity : {type : 'string', optional : true},
+    isMall : {type : 'boolean', optional : true},
+    discount : {type : 'number',max: 100, min : 0, optional : true},
+}
+
 module.exports = {
     userSchema: userSchema,
+    walletSchema : walletSchema,
+    categorySchema : categorySchema,
+    productSchema : productSchema
 }
