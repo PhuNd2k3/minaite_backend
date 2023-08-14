@@ -2,8 +2,8 @@ module.exports = {
   "development" : {
     HOST: "localhost",
     USER: "postgres",
-    // PASSWORD: "dung1702",
-    PASSWORD: "admin",
+    PASSWORD: "dung1702",
+    //PASSWORD: "admin",
     DB: "shopee",
     dialect: "postgres",
     pool: {

@@ -21,20 +21,20 @@ module.exports = (sequelize, DataTypes) => {
                     isEmail: true,
                 },
             },
-            telephone : DataTypes.CHAR(10),
+            telephone : DataTypes.STRING,
             address : DataTypes.STRING,
             avatar_url : DataTypes.STRING,
-            password: DataTypes.CHAR(60),
-            is_admin: DataTypes.BOOLEAN,
-            // deletedAt: {
-            //     type: DataTypes.DATE,
-            //     get: function () {
-            //         if (this.getDataValue('deletedAt')) {
-            //             return toLocaleString(this.getDataValue('deletedAt'))
-            //         }
-            //         return null
-            //     },
-            // },
+            password: DataTypes.CHAR,
+            isAdmin: DataTypes.BOOLEAN,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {

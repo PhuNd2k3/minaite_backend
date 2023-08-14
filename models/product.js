@@ -15,13 +15,24 @@ module.exports = (sequelize, DataTypes) => {
             category_id: DataTypes.INTEGER,
             product_name : DataTypes.STRING,
             price: DataTypes.INTEGER,
-            description : DataTypes.STRING,
+            description : DataTypes.STRING(3000),
             likes : DataTypes.INTEGER,
+            star : DataTypes.FLOAT,
+            quan_sold : DataTypes.INTEGER,
             quan_in_stock : DataTypes.INTEGER,
             origin : DataTypes.STRING,
             fromCity : DataTypes.STRING,
-            mall_or_not_boolean : DataTypes.BOOLEAN,
+            isMall : DataTypes.BOOLEAN,
             discount : DataTypes.INTEGER,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {

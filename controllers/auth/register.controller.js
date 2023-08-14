@@ -6,13 +6,19 @@ const { addNewWallet } = require('../CRUD/wallet')
 
 async function register(request, response) {
     try {
-
+        if(!request.body.email || !request.body.password || !request.body.password2)
+        {
+            return response.status(409).json({
+                message: 'Please enter email and password',
+            })
+        }
+        
         if(request.body.password !== request.body.password2){
             return response.status(409).json({
                 message: 'Password 1 and Password 2 is different',
             })
         }
-
+        
         // Check if email already registered
         const dbUser = await getUserByEmail(request.body.email)
         if (dbUser) {
@@ -21,12 +27,13 @@ async function register(request, response) {
             })
         }
         
-
+        
         // Create new user
         const newUser = {
             email: request.body.email,
             password: hashHelper.hash(request.body.password),
-            avatar_url : process.cwd() + '/public/images/avatars/default-avatar.png'
+            avatar_url : process.cwd() + '/public/images/avatars/default-avatar.png',
+            isAdmin : false,
         }
 
         // Validate new user's data

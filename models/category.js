@@ -10,8 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     }
     Category.init(
         {
-            description : DataTypes.STRING,
+            name : DataTypes.STRING,
             image : DataTypes.STRING,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {
