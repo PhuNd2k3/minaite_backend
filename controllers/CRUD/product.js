@@ -22,14 +22,13 @@ async function destroy(id) {
     const now = getCurrentDateTime()
 
     // Update deletedAt field of user
-    const updateUser = {
+    const updateProduct = {
         deletedAt: now,
     }
-    await update(updateUser, id)
+    await update(updateProduct, id)
 }
 
 module.exports = {
-    //getListUsers: index,
     getUserById: showById,
     getUserByEmail: showByEmail,
     addNewUser: create,
