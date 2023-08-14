@@ -12,9 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     ProductDetail.init(
         {
             product_id: DataTypes.INTEGER,
-            size : DataTypes.CHAR,
+            size : DataTypes.STRING,
             color: DataTypes.STRING,
             quan_in_stock : DataTypes.INTEGER,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {

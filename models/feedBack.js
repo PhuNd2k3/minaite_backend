@@ -17,6 +17,15 @@ module.exports = (sequelize, DataTypes) => {
             star : DataTypes.INTEGER,
             parent_id : DataTypes.INTEGER,
             content : DataTypes.STRING,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {

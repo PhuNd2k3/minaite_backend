@@ -16,7 +16,16 @@ module.exports = (sequelize, DataTypes) => {
             end_date : DataTypes.DATE,
             voucher_quantity : DataTypes.INTEGER,
             category_id : DataTypes.INTEGER, 
-            access_to_all : DataTypes.BOOLEAN,
+            isAccessToAll : DataTypes.BOOLEAN,
+            deletedAt: {
+                type: DataTypes.DATE,
+                get: function () {
+                    if (this.getDataValue('deletedAt')) {
+                        return toLocaleString(this.getDataValue('deletedAt'))
+                    }
+                    return null
+                },
+            },
             createdAt: {
                 type: DataTypes.DATE,
                 get: function () {
