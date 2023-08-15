@@ -33,7 +33,7 @@ async function login(req, res) {
       }
     );
 
-    res.json({ 
+    res.status(200).json({ 
       message: "login success!!" ,
       token
     });
