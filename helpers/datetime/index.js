@@ -1,9 +1,8 @@
+const { DateTime } = require('luxon');
+
 function getCurrentDateTime() {
-    const date = new Date()
-    return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-        .toISOString()
-        .replace(/T/, ' ')
-        .replace(/\..+/, '')
+    const vietnamTime = DateTime.now().setZone('Asia/Ho_Chi_Minh')
+    return vietnamTime.toFormat('yyyy-MM-dd HH:mm:ss')
 }
 
 function toLocaleString(datetime) {

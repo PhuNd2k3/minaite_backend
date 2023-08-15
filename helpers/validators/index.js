@@ -3,7 +3,6 @@ const validator = new FastestValidator()
 
 // Schemas
 const schemas = require('./schemas')
-const category = require('../../controllers/CRUD/category')
 
 // Validate functions
 const validateUser = (user) => validator.validate(user, schemas.userSchema)

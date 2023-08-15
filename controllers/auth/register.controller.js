@@ -8,13 +8,13 @@ async function register(request, response) {
     try {
         if(!request.body.email || !request.body.password || !request.body.password2)
         {
-            return response.status(409).json({
+            return response.status(400).json({
                 message: 'Please enter email and password',
             })
         }
         
         if(request.body.password !== request.body.password2){
-            return response.status(409).json({
+            return response.status(400).json({
                 message: 'Password 1 and Password 2 is different',
             })
         }

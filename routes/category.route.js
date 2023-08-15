@@ -1,13 +1,17 @@
 const express = require('express');
+const CategoryApiControllers = require('../controllers/api/category.controller');
+const { route } = require('./auth.route');
 
 const router = express.Router();
 
-// router.get('/',)
+router.get('/',CategoryApiControllers.index);
 
-// router.get('/:id',)
+router.get('/:id',CategoryApiControllers.showById)
 
-// router.patch(':/id',)
+router.post('/',CategoryApiControllers.create)
 
-// router.delete('/:id',)
+router.patch('/:id',CategoryApiControllers.updateById)
 
-// router.post('/',)
+router.delete('/:id',CategoryApiControllers.softDeleteById)
+
+module.exports = router

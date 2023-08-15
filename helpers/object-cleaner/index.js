@@ -1,12 +1,10 @@
 function clean(obj) {
-    for (var propName in obj) {
-        if (obj[propName] === null || obj[propName] === undefined) {
-            delete obj[propName]
+    for (let propName in obj) {
+        if (obj[propName] === null || obj[propName] === undefined || obj[propName].length === 0 ) {
+            delete obj[propName];
         }
     }
-    return obj
+    return obj;
 }
 
-module.exports = {
-    clean: clean,
-}
+module.exports = { clean };
