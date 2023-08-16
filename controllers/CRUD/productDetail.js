@@ -5,7 +5,7 @@ const objectCleaner = require("../../helpers/object-cleaner");
 
 async function showDetailByProductById(ProductId)
 {
-    return models.ProductDetail.findAll({
+    return models.ProductDetail.findAndCountAll({
         where: { product_id: ProductId },
     });
 }

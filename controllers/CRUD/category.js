@@ -18,9 +18,9 @@ async function index(startIndex, limit, params) {
                   }
                 : { [Op.gt]: params.delete_from_date }
             : params.delete_to_date
-            ? { [Op.gt]: params.delete_to_date }
+            ? { [Op.lt]: params.delete_to_date }
             : null,
-        createAt: params.create_from_date
+        createdAt: params.create_from_date
             ? params.create_to_date
                 ? {
                       [Op.between]: [
@@ -30,8 +30,9 @@ async function index(startIndex, limit, params) {
                   }
                 : { [Op.gt]: params.create_from_date }
             : params.create_to_date
-            ? { [Op.gt]: params.create_to_date }
+            ? { [Op.lt]: params.create_to_date }
             : null,
+        deletedAt: params.isDeleted ? { [Op.not]: null } : { [Op.is]: null },
     });
     return models.Category.findAndCountAll(
         objectCleaner.clean({

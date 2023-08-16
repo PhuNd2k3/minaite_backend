@@ -5,7 +5,7 @@ const objectCleaner = require("../../helpers/object-cleaner");
 
 async function showImageByProducById(ProductId)
 {
-    return models.ProductImage.findAll({
+    return models.ProductImage.findAndCountAll({
         where: { product_id: ProductId },
     });
 }

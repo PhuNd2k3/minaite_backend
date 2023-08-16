@@ -11,8 +11,8 @@ const {
 
 async function index(request, response) {
     try {
-        const page = Number.parseInt(request.query.page);
-        const limit = Number.parseInt(request.query.limit);
+        const page = Number.parseInt(request.body.page);
+        const limit = Number.parseInt(request.body.limit);
 
         const startIndex = (page - 1) * limit;
 
@@ -32,7 +32,10 @@ async function index(request, response) {
             create_from_date: request.body.create_from_date
                 ? request.body.create_from_date.trim() + " 00:00:00"
                 : null,
+            isDeleted: request.body.is_deleted ? request.body.is_deleted : null,
         };
+
+        console.log(params)
 
         const queryResult = await getListCategory(startIndex, limit, params);
 
@@ -86,7 +89,7 @@ async function create(request, response) {
         const dbNewCategory = addNewCategory(newCategory).then(() =>
             response.status(200).json({
                 message: "Create category successfully!",
-                id : dbNewCategory.id,
+                id: dbNewCategory.id,
             })
         );
     } catch (error) {
@@ -104,7 +107,7 @@ async function updateById(request, response) {
 
         if (dbCategory) {
             const categoryName = request.body.category_name;
-            if (await checkCategoryExisted(categoryName))
+            if (categoryName && await checkCategoryExisted(categoryName))
                 return response.status(400).json({
                     message: "Category name already exists!",
                 });
@@ -112,8 +115,8 @@ async function updateById(request, response) {
             const categoryImage = request.body.category_image;
 
             const updateCategory = {
-                name: categoryName,
-                image: categoryImage,
+                name: categoryName ? categoryName : dbCategory.name,
+                image: categoryImage ? categoryImage : dbCategory.image,
             };
 
             const validateResponse =

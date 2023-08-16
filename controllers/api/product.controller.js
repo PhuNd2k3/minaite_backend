@@ -106,8 +106,31 @@ async function showSaleProducts(request, response) {
 
 async function showProductInfo(request, response)
 {
-    const productId = request.params.id
+    try {
+        const productId = request.params.id;
+        const queryResult = await getProductById(productId);
 
+        if(!queryResult)
+            return response.status(400).json({
+                message : "Can't find this product"
+            })
+
+        if(queryResult.discount > 0)
+            queryResult.price = Math.ceil(queryResult.price * (100 - queryResult.discount)/100)
+        
+        const queryProductDetail = await getDetailByProductById(productId)
+        const queryProductImage = await getImageByProductById(productId)
+        
+        const Result = {...queryResult.dataValues, productDetails : queryProductDetail, productImages : queryProductImage}
+
+        return response.status(200).json(Result);
+
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
 }
 
 async function create(request, response) {
