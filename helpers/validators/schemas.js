@@ -32,12 +32,21 @@ const productSchema = {
     origin : {type : 'string',optional : true},
     fromCity : {type : 'string', optional : true},
     isMall : {type : 'boolean', optional : true},
-    discount : {type : 'number',max: 100, min : 0, optional : true},
+    discount : {type : 'number', max: 100, min:0, optional : true},
+}
+
+const feedbackSchema = {
+    user_id: {type: 'number'},
+    product_id: {type: 'number'},
+    star: {type: 'number', max: 5, min: 1, optional: true},
+    parent_id: {type: 'number', optional: true},
+    content: {type: 'string', optional: true},
 }
 
 module.exports = {
     userSchema: userSchema,
     walletSchema : walletSchema,
     categorySchema : categorySchema,
-    productSchema : productSchema
+    productSchema : productSchema,
+    feedbackSchema: feedbackSchema,
 }
