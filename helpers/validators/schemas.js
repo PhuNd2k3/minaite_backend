@@ -43,10 +43,18 @@ const feedbackSchema = {
     content: {type: 'string', optional: true},
 }
 
+const cartSchema = {
+    user_id: {type: 'number'},
+    product_detail_id: {type: 'number'},
+    quantity: {type: 'number', min: 1},
+    total_price: {type: 'number'},
+}
+
 module.exports = {
     userSchema: userSchema,
     walletSchema : walletSchema,
     categorySchema : categorySchema,
     productSchema : productSchema,
     feedbackSchema: feedbackSchema,
+    cartSchema: cartSchema,
 }

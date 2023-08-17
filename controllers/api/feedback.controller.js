@@ -48,10 +48,10 @@ async function getByProctId(request, response){
         const feedback = await getAllByProctId(productId)
         
         if(feedback.length === 0){
-            return response.status(201).json({message: "This product have no feedback"})
+            return response.status(201).json({message: "This product have no feedback", feedback: feedback})
         }
 
-        response.status(200).json(feedback)
+        response.status(200).json({message: "Success",feedback: feedback})
     }
     catch(error){
         response.status(400).json({ message: "Get data error: " + error })

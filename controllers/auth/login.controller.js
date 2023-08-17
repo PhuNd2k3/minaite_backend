@@ -13,11 +13,12 @@ async function login(req, res) {
       return res.status(404).json({ message: "Email not found" });
     }
 
+    console.log(user.password.trim()==password);
     const isPasswordValid = await hashHelper.compare(
       password,
       user.password.trim()
     );
-
+    console.log(isPasswordValid);
     if (!isPasswordValid) {
       return res.status(401).json({
         message: "Invalid password",
@@ -33,7 +34,7 @@ async function login(req, res) {
       }
     );
 
-    res.json({ 
+    res.status(200).json({ 
       message: "login success!!" ,
       token
     });

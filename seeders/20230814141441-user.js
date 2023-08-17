@@ -1,4 +1,5 @@
 'use strict';
+const hashHelper = require(process.cwd() +'/helpers/password-encrypter')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
           telephone: '0973755062',
           address: 'Number 1 in your heart',
           avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
-          password: 'admin',
+          password: hashHelper.hash('admin'),
           isAdmin: true,
         },
         {
@@ -24,10 +25,8 @@ module.exports = {
           email: 'alice@example.com',
           telephone: '1234567890',
           address: '123 Main St',
-          avatar_url: process.cwd() + '/public/images/avatars/alice-avatar.png',
-          password: 'user12345',
-          isAdmin: false,
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -37,8 +36,8 @@ module.exports = {
           email: 'bob@example.com',
           telephone: '9876543210',
           address: '456 Elm St',
-          avatar_url: process.cwd() + '/public/images/avatars/bob-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -48,8 +47,8 @@ module.exports = {
           email: 'emily@example.com',
           telephone: '8765432109',
           address: '789 Oak St',
-          avatar_url: process.cwd() + '/public/images/avatars/emily-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -59,8 +58,8 @@ module.exports = {
           email: 'david@example.com',
           telephone: '5678901234',
           address: '101 Pine St',
-          avatar_url: process.cwd() + '/public/images/avatars/david-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -70,8 +69,8 @@ module.exports = {
           email: 'emma@example.com',
           telephone: '5432109876',
           address: '222 Maple St',
-          avatar_url: process.cwd() + '/public/images/avatars/emma-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -81,8 +80,8 @@ module.exports = {
           email: 'michael@example.com',
           telephone: '9876123450',
           address: '333 Cedar St',
-          avatar_url: process.cwd() + '/public/images/avatars/michael-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -92,8 +91,8 @@ module.exports = {
           email: 'olivia@example.com',
           telephone: '4321098765',
           address: '444 Birch St',
-          avatar_url: process.cwd() + '/public/images/avatars/olivia-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -103,8 +102,8 @@ module.exports = {
           email: 'william@example.com',
           telephone: '8765432109',
           address: '555 Oak St',
-          avatar_url: process.cwd() + '/public/images/avatars/william-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
         {
@@ -114,8 +113,8 @@ module.exports = {
           email: 'sophia@example.com',
           telephone: '9876543210',
           address: '666 Elm St',
-          avatar_url: process.cwd() + '/public/images/avatars/sophia-avatar.png',
-          password: 'user12345',
+          avatar_url: process.cwd() + '/public/images/avatars/default-avatar.png',
+          password: hashHelper.hash('user12345'),
           isAdmin: false,
         },
       ],
