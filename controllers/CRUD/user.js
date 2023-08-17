@@ -5,8 +5,9 @@ const { getCurrentDateTime } = require(process.cwd() + '/helpers/datetime')
 const include = [
     {
         model: models.Wallets,
+        required: true,
         attributes:['shopee_pay_money'],
-    },
+    }
 ]
 
 async function showById(id) {

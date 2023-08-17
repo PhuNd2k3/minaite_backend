@@ -1,6 +1,14 @@
 const models = require(process.cwd() + '/models')
 const { getCurrentDateTime } = require(process.cwd() + '/helpers/datetime')
 
+const include = [
+    {
+        model: models.User,
+        required: true,
+        attributes: ['name','avatar_url'],
+    }
+]
+
 async function create(newFeedBack) {
     return models.FeedBack.create(newFeedBack)
 }
@@ -20,6 +28,7 @@ async function destroy(id) {
 
 async function getAllByProctId(productId){
     return models.FeedBack.findAll({
+        include: include,
         where: {product_id: productId}
     })
 }

@@ -98,7 +98,7 @@ module.exports = {
               content: 'We appreciate your feedback. We are working on improvements.',
             },
             {
-              user_id: 5,
+              user_id: 1,
               product_id: 5,
               star: null,
               parent_id: 6, 
