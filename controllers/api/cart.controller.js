@@ -1,13 +1,15 @@
 const validators = require("../../helpers/validators")
 const { addNewCart, 
         getAllByUserId, 
-        updateCartById, 
+        updateCartById,
+        softDeleteCartById, 
         getByCartId} = require("../CRUD/cart")
 
 const models = require(process.cwd() + '/models')
 const ProductDetail = models.ProductDetail
 const Product = models.Product
 
+//cần xử lý add trùng user_id và product_detail_id
 async function add(request, response) {
     try {
         const newCart = {
@@ -108,12 +110,43 @@ async function update(request, response) {
         })
         .catch((error) => {
             return response.status(401).json({
-                message: 'Update cart fail! Maybe exceed the quantity in stock',
-                error: error,
+                message: 'Update cart fail!',
+                error: error.message,
             })
         })
 
     } catch (error) {
+        return response.status(500).json({
+            message: 'Something went wrong!',
+            error: error,
+        })
+    }
+}
+
+async function deleteById (request, response) {
+    try{
+        const cart = await getByCartId(request.params.cartId)
+        if (!cart) {
+            return response.status(403).json({ message: "Can't find this cart" })
+        }
+        if(cart.deletedAt){
+            return response.status(404).json({ message: "This cart has been deleted" })
+        }
+
+        softDeleteCartById(request.params.cartId)
+        .then(() => {
+            return response.status(200).json({
+                message: 'Delete cart successfully!',
+            })
+        })
+        .catch((error) => {
+            return response.status(401).json({
+                message: 'Delete failed!',
+                error: error,
+            })
+        })
+    }
+    catch (error) {
         return response.status(500).json({
             message: 'Something went wrong!',
             error: error,
@@ -126,4 +159,5 @@ module.exports = {
     add: add,
     getByUserId: getByUserId,
     update: update,
+    deleteById: deleteById,
 }

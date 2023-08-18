@@ -10,27 +10,6 @@ const include = [
     },
 ]
 
-// async function index(startIndex, limit, params) {
-//     const selection = objectCleaner.clean({
-//         '$Owner.role$': params.role !== '' ? params.role : null,
-//         '$Owner.name$': { [Op.like]: `%${params.txt_search}%` },
-//         createdAt: {
-//             [Op.between]: [params.from_date, params.to_date],
-//         },
-//     })
-
-//     return models.Wallet.findAndCountAll({
-//         include: include,
-//         attributes: {
-//             exclude: ['createdAt', 'updatedAt'],
-//         },
-//         offset: startIndex,
-//         limit: limit,
-//         order: [['user_id', 'DESC']],
-//         where: selection,
-//     })
-// }
-
 async function showById(id) {
     return models.Wallet.findByPk(id, {
         include: include,

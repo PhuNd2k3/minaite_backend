@@ -34,6 +34,10 @@ async function update(updateCart, id) {
         attributes: ['quantity', 'total_price']
     })
 
+    if (updateCart.quantity > cartDetail.ProductDetail.quan_in_stock) {
+        throw new Error('Exceed the quantity in stock')
+    }
+
     updateCart['total_price'] = updateCart.quantity* cartDetail.ProductDetail.Product.price * (1 - cartDetail.ProductDetail.Product.discount / 100)
 
     return models.Cart.update(updateCart, { 
