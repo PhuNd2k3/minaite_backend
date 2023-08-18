@@ -32,8 +32,7 @@ async function register(request, response) {
         const newUser = {
             email: request.body.email,
             password: hashHelper.hash(request.body.password),
-            avatar_url : process.cwd() + '/public/images/avatars/default-avatar.png',
-            isAdmin : false,
+            avatar_url : process.cwd() + '/public/images/avatars/default-avatar.png'
         }
 
         // Validate new user's data

@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 
-const routes = require('./routes/index')
+const routes = require('./routes')
 
 const app = express()
 
@@ -12,24 +12,15 @@ app.use(
     }),
 )
 
-// Database
-// const db = require("./models");
-
-// // db.sequelize
-// //     .sync()
-// //     .then(() => {
-// //         console.log("Synced db.");
-// //     })
-// //     .catch((err) => {
-// //         console.log("Failed to sync db: " + err.message);
-// //     });
-
-
 app.use(express.json());
 
 app.use('/public', express.static('public'))
 
 app.use('/api/auth', routes.auth)
+
+app.use('/api/product', routes.product)
+
+app.use('/api/category',routes.category)
 
 app.use('/api/feedback', routes.feedback)
 
