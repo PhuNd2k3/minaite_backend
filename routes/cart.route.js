@@ -9,4 +9,6 @@ router.get('/user-cart/:userId', cartController.getByUserId)
 
 router.patch('/update-cart', cartController.update)
 
+router.delete('/delete-cart-item/:cartId',cartController.deleteById)
+
 module.exports = router;
