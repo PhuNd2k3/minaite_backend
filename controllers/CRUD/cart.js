@@ -8,13 +8,20 @@ const include = [
         include: [
             {
                 model: models.Product,
+                include: [
+                    {
+                        model: models.ProductImage,
+                        attributes: ['image'],
+                        required: true,
+                    }
+                ],
                 attributes: ['product_name','price','discount'],
                 required: true,
             },
         ],
         required: true,
         attributes: ['size','color','quan_in_stock'],
-    }
+    },
 ]
 
 async function showById(id) {
