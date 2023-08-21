@@ -45,7 +45,7 @@ async function index(startIndex, limit, params) {
     }
 
     const selection = objectCleaner.clean({
-        // [Op.or]: conditions.filter(array => array.length > 0) > 0 ? conditions : [{}],
+        // [Op.or]: conditions,
         discount: params.isDiscount ? { [Op.gt]: 0 } : null,
         isMall: params.isMall ? { [Op.is]: true } : null,
         price: params.price_from
@@ -65,7 +65,7 @@ async function index(startIndex, limit, params) {
         deletedAt: { [Op.eq]: null },
     });
 
-    // console.log(selection);
+    console.log(selection);
 
     return models.Product.findAndCountAll(
         objectCleaner.clean({

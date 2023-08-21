@@ -50,11 +50,23 @@ const cartSchema = {
     total_price: {type: 'number'},
 }
 
+const productImage = {
+    image : {type : 'string'}
+}
+
+const productDetail = {
+    color : {type : 'string'},
+    size : {type : 'string' , optional : true},
+    quan_in_stock : {type : 'number', min : 0}
+}
+
 module.exports = {
     userSchema: userSchema,
     walletSchema : walletSchema,
     categorySchema : categorySchema,
     productSchema : productSchema,
+    productDetail : productDetail,
+    productImage : productImage,
     feedbackSchema: feedbackSchema,
     cartSchema: cartSchema,
 }
