@@ -82,10 +82,6 @@ async function getByUserId(request, response){
     }
 }
 
-// async function deleteById(request, response) {
-
-// }
-
 async function update(request, response) {
     try{
         if (request.body.quantity < 0){

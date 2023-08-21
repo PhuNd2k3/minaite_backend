@@ -111,7 +111,7 @@ async function showProductInfo(request, response)
         const queryResult = await getProductById(productId);
 
         if(!queryResult)
-            return response.status(400).json({
+            return response.status(404).json({
                 message : "Can't find this product"
             })
 
