@@ -10,6 +10,11 @@ async function showDetailByProductById(ProductId)
     });
 }
 
+async function create(newProductDetail) {
+    return models.ProductDetail.create(newProductDetail)
+}
+
 module.exports = {
     getDetailByProductById : showDetailByProductById,
+    addProductDetails : create
 }
