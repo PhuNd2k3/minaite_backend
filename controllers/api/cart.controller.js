@@ -4,14 +4,20 @@ const { addNewCart,
         updateCartById, 
         getByCartId} = require("../CRUD/cart")
 
+const {
+    decodeToken
+} = require("../CRUD/user")
+
 const models = require(process.cwd() + '/models')
 const ProductDetail = models.ProductDetail
 const Product = models.Product
 
 async function add(request, response) {
     try {
+        const decode = decodeToken(request.body.token)
+
         const newCart = {
-            user_id: request.body.user_id,
+            user_id: decode.id,
             product_detail_id: request.body.product_detail_id,
             quantity: request.body.quantity,
         }
@@ -66,7 +72,8 @@ async function add(request, response) {
 //[Sprint_2] [BE] [Chi tiết sản phẩm] Viết API get sản phẩm trong giỏ hàng của 1 user
 async function getByUserId(request, response){
     try{
-        userId = request.params.userId
+        const decode = decodeToken(request.body.token)
+        userId = decode.id
         const cart = await getAllByUserId(userId)
         if(cart.length === 0){
             return response.status(201).json({message: "This user has no products in the cart", cart: cart})

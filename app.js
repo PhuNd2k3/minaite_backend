@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const path = require('path');
 
 const routes = require('./routes')
 
@@ -11,6 +12,10 @@ app.use(
         origin: ['http://localhost:3000', 'http://localhost:3001'],
     }),
 )
+
+const staticPath = path.join(__dirname, 'public');
+
+app.use(express.static(staticPath));
 
 app.use(express.json());
 
