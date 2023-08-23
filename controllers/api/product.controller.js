@@ -24,6 +24,8 @@ async function index(request, response) {
         const page = Number.parseInt(request.query.page);
         const limit = Number.parseInt(request.query.limit);
         
+        // console.log(request.body.txt_search)
+
         const startIndex = (page - 1) * limit;
         
         const params = {
@@ -36,7 +38,7 @@ async function index(request, response) {
             star_from : request.body.star_from ? request.body.star_from : null,
             star_to : request.body.star_to ? request.body.star_to : null,
         }
-        console.log(params)
+        // console.log(params)
         const queryResult = await getListProduct(startIndex, limit, params);
         
         queryResult.rows.forEach(element => {
@@ -72,7 +74,7 @@ async function showById(request, response) {
 
 async function showByCategoryId(request, response) {
     try {
-        const categoryId = request.params.id;
+        const categoryId = request.params.id
         const queryResult = await getProductByCategoryId(categoryId);
 
         queryResult.rows.forEach(element => {
@@ -179,7 +181,7 @@ async function create(request, response) {
 
         const dbNewProduct = await addNewProduct(newProduct)
 
-        console.log("id : " + dbNewProduct.id)
+        // console.log("id : " + dbNewProduct.id)
 
         for(var imageInfo in images){
             const newImage = {

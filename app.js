@@ -26,4 +26,6 @@ app.use('/api/feedback', routes.feedback)
 
 app.use('/api/cart', routes.cart)
 
+app.use('/api/bill', routes.bill)
+
 module.exports = app
