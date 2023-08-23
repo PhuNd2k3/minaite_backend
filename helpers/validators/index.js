@@ -11,12 +11,18 @@ const validateCategory = (category) => validator.validate(category, schemas.cate
 const validateProduct = (product) => validator.validate(product, schemas.productSchema)
 const validateFeedBack = (feedback) => validator.validate(feedback, schemas.feedbackSchema)
 const validateCart = (cart) => validator.validate(cart, schemas.cartSchema)
+const validateImage = (productImage) => validator.validate(productImage , schemas.productImage)
+const validateProductDetail = (productDetail) => validator.validate(productDetail , schemas.productDetail)
+
+
 
 module.exports = {
     validateUser: validateUser,
     validateWallet : validateWallet,
     validateCategory : validateCategory,
     validateProduct : validateProduct,
+    validateImage : validateImage,
+    validateProductDetail : validateProductDetail,
     validateFeedBack: validateFeedBack,
     validateCart: validateCart,
 }

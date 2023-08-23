@@ -35,17 +35,27 @@ async function index(startIndex, limit, params) {
         );
     }
 
-    if (params.categoryInfo) {
-        conditions.push(
-            objectCleaner.clean({
-                "$Category.name$": { [Op.like]: `%${params.categoryInfo}%` },
-                category_id: params.categoryInfo,
-            })
-        );
-    }
+    // if (params.categoryInfo) {
+    //     conditions.push(
+    //         objectCleaner.clean({
+    //             "$Category.name$": { [Op.like]: `%${params.categoryInfo}%` },
+    //             category_id: params.categoryInfo,
+    //         })
+    //     );
+    // }
 
-    const selection = objectCleaner.clean({
-        // [Op.or]: conditions.filter(array => array.length > 0) > 0 ? conditions : [{}],
+    conditions.filter(array => array.length > 0)
+    
+    
+    let selection = {}
+
+    if (conditions.length > 0) {
+        selection[Op.or] = conditions;
+    }
+    
+    selection = objectCleaner.clean({
+        // ...selection,
+        product_name : params.txt_search ? { [Op.like]: `%${params.txt_search}%` } : null,
         discount: params.isDiscount ? { [Op.gt]: 0 } : null,
         isMall: params.isMall ? { [Op.is]: true } : null,
         price: params.price_from
@@ -64,7 +74,7 @@ async function index(startIndex, limit, params) {
             : null,
         deletedAt: { [Op.eq]: null },
     });
-
+    
     // console.log(selection);
 
     return models.Product.findAndCountAll(

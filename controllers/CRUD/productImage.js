@@ -10,6 +10,11 @@ async function showImageByProducById(ProductId)
     });
 }
 
+async function create(newProductImage) {
+    return models.ProductImage.create(newProductImage)
+}
+
 module.exports = {
     getImageByProductById : showImageByProducById,
+    addProductImage : create,
 }
