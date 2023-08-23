@@ -1,6 +1,7 @@
 const { Op } = require('sequelize')
 const models = require(process.cwd() + '/models')
 const { getCurrentDateTime } = require(process.cwd() + '/helpers/datetime')
+const jwt = require("jsonwebtoken")
 
 // const include = [
 //     {
@@ -11,6 +12,11 @@ const { getCurrentDateTime } = require(process.cwd() + '/helpers/datetime')
 
 async function showById(id) {
     return models.User.findByPk(id, { include: include })
+}
+
+async function decodeToken(token)
+{
+    return jwt.verify(token, process.env.JWT_SECRET_KEY);
 }
 
 async function showByEmail(email) {
@@ -42,4 +48,5 @@ module.exports = {
     addNewUser: create,
     updateUserById: update,
     softDeleteUserById: destroy,
+    decodeToken : decodeToken
 }
