@@ -58,4 +58,5 @@ module.exports = {
     softDeleteUserById: destroy,
     showAllUser: showAllUser,
     showUserById: showUserById,
+    decodeToken : decodeToken
 }
