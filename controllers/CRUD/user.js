@@ -15,6 +15,11 @@ async function create(newUser) {
     return models.User.create(newUser)
 }
 
+async function decodeToken(token)
+{
+    return jwt.verify(token, process.env.JWT_SECRET_KEY);
+}
+
 async function update(updateUser, id) {
     return models.User.update(updateUser, { where: { id: id } })
 }
@@ -53,4 +58,5 @@ module.exports = {
     softDeleteUserById: destroy,
     showAllUser: showAllUser,
     showUserById: showUserById,
+    decodeToken : decodeToken
 }

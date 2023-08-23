@@ -4,8 +4,10 @@ const validators = require("../../helpers/validators")
 
 async function create(request, response) {
     try {
+        const decode = decodeToken(request.body.token)
+
         const newFeedBack = {
-            user_id: request.body.user_id,
+            user_id: decode.id,
             product_id: request.body.product_id,
             star: request.body.star,
             parent_id: request.body.parent_id,
