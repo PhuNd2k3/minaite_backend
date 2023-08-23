@@ -10,11 +10,13 @@ const {
 } = require("../CRUD/product");
 
 const {
-    getDetailByProductById
+    getDetailByProductById,
+    addProductDetails,
 } = require("../CRUD/productDetail")
 
 const {
-    getImageByProductById
+    getImageByProductById,
+    addProductImage,
 } = require("../CRUD/productImage")
 
 async function index(request, response) {
@@ -22,6 +24,8 @@ async function index(request, response) {
         const page = Number.parseInt(request.query.page);
         const limit = Number.parseInt(request.query.limit);
         
+        // console.log(request.body.txt_search)
+
         const startIndex = (page - 1) * limit;
         
         const params = {
@@ -37,10 +41,24 @@ async function index(request, response) {
         // console.log(params)
         const queryResult = await getListProduct(startIndex, limit, params);
         
-        queryResult.rows.forEach(element => {
+        queryResult.rows.forEach(async element => {
+            
             if(element.discount > 0)
                 element.price = Math.ceil(element.price * (100 - element.discount)/100)
+            
+            const productId = element.id
+
+            console.log(productId)
+
+            const queryProductDetail = await getDetailByProductById(productId)
+            const queryProductImage = await getImageByProductById(productId)
+            
+            element.productDetails = queryProductDetail.rows
+            element.productImages = queryProductImage.rows
+
+            console.log(queryProductImage, queryProductDetail)
         });
+        queryResult.count = queryResult.rows.length
         return response.status(200).json(queryResult);
     } catch (error) {
         return response.status(500).json({
@@ -69,7 +87,7 @@ async function showById(request, response) {
 
 async function showByCategoryId(request, response) {
     try {
-        const categoryId = request.params.id;
+        const categoryId = request.params.id
         const queryResult = await getProductByCategoryId(categoryId);
 
         queryResult.rows.forEach(element => {
@@ -111,7 +129,7 @@ async function showProductInfo(request, response)
         const queryResult = await getProductById(productId);
 
         if(!queryResult)
-            return response.status(404).json({
+            return response.status(400).json({
                 message : "Can't find this product"
             })
 
@@ -121,7 +139,7 @@ async function showProductInfo(request, response)
         const queryProductDetail = await getDetailByProductById(productId)
         const queryProductImage = await getImageByProductById(productId)
         
-        const Result = {...queryResult.dataValues, productDetails : queryProductDetail, productImages : queryProductImage}
+        const Result = {...queryResult.dataValues, productDetails : queryProductDetail.rows, productImages : queryProductImage.rows}
 
         return response.status(200).json(Result);
 
@@ -149,6 +167,24 @@ async function create(request, response) {
             isMall : request.body.isMall,
             discount : request.body.discount,
         }
+
+        const images  = request.body.images
+        const details = request.body.details
+
+        if(images.length === 0)
+        {
+            return response.status(400).json({
+                message : "Image not found"
+            })
+        }   
+
+        if(details.length === 0)
+        {
+            return response.status(400).json({
+                message : "product details not found"
+            })
+        }
+
         const validateResponse = validators.validateProduct(newProduct);
         if (validateResponse !== true)
             return response.status(400).json({
@@ -156,11 +192,51 @@ async function create(request, response) {
                 error: validateResponse,
         });
 
-        const dbNewProduct = addNewProduct(newProduct).then(()=>{
-            response.status(200).json({
-                message : "Create product successfull!",
-                id : dbNewProduct.id,
-            })
+        const dbNewProduct = await addNewProduct(newProduct)
+
+        // console.log("id : " + dbNewProduct.id)
+
+        for(var imageInfo in images){
+            const newImage = {
+                image : imageInfo,
+                product_id : dbNewProduct.id
+            }
+
+            const validateResponseImage = validators.validateImage(newImage)
+            if(validateResponseImage !== true)
+            {
+                return response.status(400).json({
+                    message : "validation image failed",
+                    error : validateResponseImage
+                })
+            }
+
+            await addProductImage(newImage)
+        }
+
+        for(var i = 0; i < details.length; i++){
+            const newProductDetail = {
+                color : details[i].color,
+                size : details[i].size,
+                quan_in_stock : details[i].quantity,
+                product_id : dbNewProduct.id
+            }
+
+            const validateResponseDetail = validators.validateProductDetail(newProductDetail)
+            if(validateResponseDetail !== true)
+            {
+                return response.status(400).json({
+                    message : "validation product's detail failed",
+                    error : validateResponseDetail
+                })
+            }
+             
+            await addProductDetails(newProductDetail)
+        }
+
+        return response.status(200).json({
+            message : "Create product successfull!",
+            id : dbNewProduct.id,
         })
 
     } catch (error) {

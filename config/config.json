@@ -6,7 +6,8 @@
     "port": 5432,
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "timezone": "+07:00"
+    "timezone": "+07:00",
+    "logging":false
   },
   "test": {
     "username": "postgres",

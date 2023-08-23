@@ -2,20 +2,12 @@ const { Op } = require('sequelize')
 const models = require(process.cwd() + '/models')
 const { getCurrentDateTime } = require(process.cwd() + '/helpers/datetime')
 
-// const include = [
-//     {
-//         model: models.Wallets,
-//         attributes:['shopee_pay_money'],
-//     },
-// ]
-
 async function showById(id) {
     return models.User.findByPk(id, { include: include })
 }
 
 async function showByEmail(email) {
     return models.User.findOne({ 
-        //include: include, 
         where: { email: email } })
 }
 
@@ -36,10 +28,29 @@ async function destroy(id) {
     await update(updateUser, id)
 }
 
+async function showAllUser(){
+    return await models.User.findAll({
+        where: {
+            deletedAt: null,
+        },
+        attributes: ['id', 'name', 'gender', 'birthday', 'email', 'telephone', 'address', 'avatar_url'],
+    })
+}
+
+async function showUserById(id){
+    return await models.User.findByPk(id,{
+        attributes: {
+            exclude: ['password', 'isAdmin']
+        }
+    })
+}
+
 module.exports = {
     getUserById: showById,
     getUserByEmail: showByEmail,
     addNewUser: create,
     updateUserById: update,
     softDeleteUserById: destroy,
+    showAllUser: showAllUser,
+    showUserById: showUserById,
 }
