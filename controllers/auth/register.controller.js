@@ -1,5 +1,6 @@
 const hashHelper = require(process.cwd() +'/helpers/password-encrypter')
 const validators = require(process.cwd() + '/helpers/validators')
+const jwt = require("jsonwebtoken")
 
 const { getUserByEmail, addNewUser } = require('../CRUD/user')
 const { addNewWallet } = require('../CRUD/wallet')
@@ -53,9 +54,19 @@ async function register(request, response) {
                 user_id: result.id,
                 shopee_pay_money: 0,
             }
+
+            const token = jwt.sign(
+                { id: result.id, email: request.body.email },
+                process.env.JWT_SECRET_KEY,
+                {
+                  expiresIn: "1h",
+                }
+            );
+
             addNewWallet(newWallet)
 
             return response.status(200).json({
+                token : token,
                 message: 'Create user successfully!',
             })
         })

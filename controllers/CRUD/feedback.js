@@ -33,21 +33,10 @@ async function getAllByProctId(productId){
     })
 }
 
-async function showAllReview(){
-    return await models.FeedBack.findAll({
-        where: {
-            deletedAt: null,
-        },
-        attributes: {
-            exclude: ['deletedAt', 'updatedAt','createdAt']
-          }
-    })
-}
 
 module.exports = {
     getAllByProctId: getAllByProctId,
     addNewFeedBack: create,
     updateFeedBackById: update,
     softDeleteFeedBackById: destroy,
-    showAllReview: showAllReview,
 }
