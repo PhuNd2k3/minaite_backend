@@ -73,11 +73,9 @@ async function add(request, response) {
 //[Sprint_2] [BE] [Chi tiết sản phẩm] Viết API get sản phẩm trong giỏ hàng của 1 user
 async function getByUserId(request, response){
     try{
-
         const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY)
-        const userId = decode.id
-        const cart = await getAllByUserId(userId)
-        // console.log(1)
+
+        const cart = await getAllByUserId(decode.id)
         if(cart.length === 0){
             return response.status(201).json({message: "This user has no products in the cart", cart: cart})
         }
