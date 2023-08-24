@@ -37,6 +37,7 @@ async function index(request, response) {
             price_to : request.body.price_to ? request.body.price_to : null,
             star_from : request.body.star_from ? request.body.star_from : null,
             star_to : request.body.star_to ? request.body.star_to : null,
+            rangePrice : request.body.rangePrice ? request.body.rangePrice : null
         }
         // console.log(params)
         const queryResult = await getListProduct(startIndex, limit, params);
@@ -48,7 +49,7 @@ async function index(request, response) {
             
             const productId = element.id
 
-            console.log(productId)
+            // console.log(productId)
 
             const queryProductDetail = await getDetailByProductById(productId)
             const queryProductImage = await getImageByProductById(productId)
@@ -56,8 +57,8 @@ async function index(request, response) {
             element.productDetails = queryProductDetail.rows
             element.productImages = queryProductImage.rows
 
-            console.log(queryProductImage, queryProductDetail)
         });
+        console.log(queryResult.rows[6])
         queryResult.count = queryResult.rows.length
         return response.status(200).json(queryResult);
     } catch (error) {
