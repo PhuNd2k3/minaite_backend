@@ -49,16 +49,18 @@ async function index(request, response) {
             
             const productId = element.id
 
-            // console.log(productId)
+            // // console.log(productId)
 
-            const queryProductDetail = await getDetailByProductById(productId)
-            const queryProductImage = await getImageByProductById(productId)
+            // const queryProductDetail = await getDetailByProductById(productId)
+            // const queryProductImage = await getImageByProductById(productId)
             
-            element.productDetails = queryProductDetail.rows
-            element.productImages = queryProductImage.rows
+            // element.productDetails = queryProductDetail.rows
+            // element.productImages = queryProductImage.rows
 
+            
+            const result = showById(request.params.id, )
         });
-        console.log(queryResult.rows[6])
+        console.log(queryResult.rows[6].length)
         queryResult.count = queryResult.rows.length
         return response.status(200).json(queryResult);
     } catch (error) {
