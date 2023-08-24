@@ -1,10 +1,10 @@
 const { addNewFeedBack } = require("../CRUD/feedback")
 const { getAllByProctId } = require("../CRUD/feedback")
 const validators = require("../../helpers/validators")
-
+const jwt = require("jsonwebtoken")
 async function create(request, response) {
     try {
-        const decode = decodeToken(request.body.token)
+        const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY)
 
         const newFeedBack = {
             user_id: decode.id,

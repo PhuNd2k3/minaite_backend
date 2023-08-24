@@ -67,20 +67,23 @@ async function index(startIndex, limit, params) {
 
     // console.log(selection);
 
+    const orderBy = [
+        // ["price", "DESC"],
+        ["id", "ASC"],
+        ["category_id", "ASC"],
+        ["star", "DESC"],
+        ["likes", "DESC"],
+        ["discount", "DESC"],
+    ]
+
+    params.rangePrice ? orderBy.push(["price", params.rangePrice]) : null;
+
     return models.Product.findAndCountAll(
         objectCleaner.clean({
             include: include,
             offset: Number.isNaN(startIndex) ? null : startIndex,
             limit: Number.isNaN(limit) ? null : limit,
-            order: [
-                ["id", "ASC"],
-                ["category_id", "ASC"],
-                ["product_name", "DESC"],
-                ["price", "DESC"],
-                ["star", "DESC"],
-                ["likes", "DESC"],
-                ["discount", "DESC"],
-            ],
+            order: orderBy,
             where: selection,
         })
     );
