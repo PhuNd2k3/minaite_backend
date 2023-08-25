@@ -1,12 +1,11 @@
 const USER_ROLE = false;
 const ADMIN_ROLE = true;
-const models = require(process.cwd() + "/models");
 const jwt = require("jsonwebtoken");
 
 async function checkRoleUser(request, response, next) {
   try {
     const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY);
-    const requestRole = (await models.User.findByPk(decode.id)).isAdmin;
+    const requestRole = decode.isAdmin;
 
     // Check if request user is admin or not
     if (requestRole != ADMIN_ROLE) {
@@ -27,7 +26,7 @@ async function checkRoleUser(request, response, next) {
 async function checkRoleAdmin(request, response, next) {
   try {
     const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY);
-    const requestRole = (await models.User.findByPk(decode.id)).isAdmin;
+    const requestRole = decode.isAdmin;
     // Check if request user is admin or not
     if (requestRole != ADMIN_ROLE) {
       return response.status(400).json({

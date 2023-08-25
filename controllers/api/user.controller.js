@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken");
 async function getUserById(request, response) {
   try {
     const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY);
-
-    console.log(decode);
+    //const token = request.headers.authorization.split(' ')[1]
+    //Bearer {token}
     const profile = await showUserById(decode.id);
     return response.status(200).json({
       message: "Success get profile",
