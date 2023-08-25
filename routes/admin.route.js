@@ -1,12 +1,25 @@
-const express = require('express');
-const adminController = require('../controllers/api/admin.controller')
+const express = require("express");
+const adminController = require("../controllers/api/admin.controller");
+const checkRoleMiddleware = require("../middleware/check-role");
 
 const router = express.Router();
 
-router.get('/all-user',adminController.getAllUser)
+router.get(
+  "/all-user",
+  checkRoleMiddleware.checkRoleAdmin,
+  adminController.getAllUser
+);
 
-router.get('/all-review',adminController.getAllReview)
+router.get(
+  "/all-review",
+  checkRoleMiddleware.checkRoleAdmin,
+  adminController.getAllReview
+);
 
-router.get('/all-product',adminController.getAllProduct)
+router.get(
+  "/all-product",
+  checkRoleMiddleware.checkRoleAdmin,
+  adminController.getAllProduct
+);
 
-module.exports  = router
+module.exports = router;
