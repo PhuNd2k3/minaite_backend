@@ -50,7 +50,7 @@ async function showAllUser() {
 async function showUserById(id) {
   return await models.User.findByPk(id, {
     attributes: {
-      exclude: ["password", "isAdmin"],
+      exclude: ["password"],
     },
   });
 }
