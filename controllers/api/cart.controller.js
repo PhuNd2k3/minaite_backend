@@ -19,6 +19,7 @@ async function add(request, response) {
 
         const newCart = {
             user_id: decode.id,
+            // user_id: 11,
             product_detail_id: request.body.product_detail_id,
             quantity: request.body.quantity,
         }
