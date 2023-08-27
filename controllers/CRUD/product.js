@@ -46,6 +46,7 @@ async function index(startIndex, limit, params) {
 
     const selection = objectCleaner.clean({
         // [Op.or]: conditions.filter(array => array.length > 0) > 0 ? conditions : [{}],
+        product_name : params.txt_search ? { [Op.like]: `%${params.txt_search}%` } : null,
         discount: params.isDiscount ? { [Op.gt]: 0 } : null,
         isMall: params.isMall ? { [Op.is]: true } : null,
         price: params.price_from
@@ -87,6 +88,7 @@ async function index(startIndex, limit, params) {
             where: selection,
         })
     );
+
 }
 
 async function showById(id) {
