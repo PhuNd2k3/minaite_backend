@@ -8,38 +8,33 @@ const {
 
 const { decodeToken } = require("../CRUD/user");
 const jwt = require("jsonwebtoken");
-
 const models = require(process.cwd() + "/models");
 const ProductDetail = models.ProductDetail;
 const Product = models.Product;
 
 async function add(request, response) {
   try {
-    const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY);
     const newCart = {
-      user_id: decode.id,
-      product_detail_id: request.body.product_detail_id,
-      quantity: request.body.quantity,
-    };
-    console.log(newCart);
+        user_id: decode.id,
+        // user_id: 11,
+        product_detail_id: request.body.product_detail_id,
+        quantity: request.body.quantity,
+    }
     const productDetail = await ProductDetail.findOne({
-      where: { id: newCart.product_detail_id },
-      include: [
-        {
+        where: { id: newCart.product_detail_id},
+        include: [{
           model: Product,
           required: true,
-          right: true,
-        },
-      ],
-    });
+          right: true
+        }]
+      })
     if (newCart.quantity > productDetail.quan_in_stock) {
-      return response.status(402).json({
-        message: "Exceed the quantity in stock",
-      });
+        return response.status(402).json({
+            message: 'Exceed the quantity in stock',
+        })
     }
-    const unitPrice =
-      productDetail.Product.price * (1 - productDetail.Product.discount / 100);
-    newCart["total_price"] = newCart.quantity * unitPrice;
+    const unitPrice = productDetail.Product.price * (1 - productDetail.Product.discount / 100);
+    newCart['total_price'] = newCart.quantity*unitPrice
 
     //Validate new Cart's data
     const validateResponse = validators.validateCart(newCart);

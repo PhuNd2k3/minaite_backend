@@ -30,7 +30,7 @@ async function index(request, response) {
         
         const params = {
             isMall : request.body.isMall ? request.body.isMall : false,
-            txt_search : request.body.txt_search ? request.body.txt_search.trim() : '',
+            txt_search : request.params.txt_search ? request.params.txt_search.trim() : '',
             categoryInfo : request.body.categoryInfo ? request.body.categoryInfo.trim() : '',
             isDiscount : request.body.isDiscount ? request.body.isDiscount : false,
             price_from : request.body.price_from ? request.body.price_from: null,
