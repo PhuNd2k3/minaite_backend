@@ -11,12 +11,12 @@ const {
 
 const {
     getDetailByProductById,
-    addProductDetails,
+    // addProductDetails,
 } = require("../CRUD/productDetail")
 
 const {
     getImageByProductById,
-    addProductImage,
+    // addProductImage,
 } = require("../CRUD/productImage")
 
 async function index(request, response) {
@@ -30,7 +30,7 @@ async function index(request, response) {
         
         const params = {
             isMall : request.body.isMall ? request.body.isMall : false,
-            txt_search : request.params.txt_search ? request.params.txt_search.trim() : '',
+            txt_search : request.query.txt_search ? request.query.txt_search.trim() : '',
             categoryInfo : request.body.categoryInfo ? request.body.categoryInfo.trim() : '',
             isDiscount : request.body.isDiscount ? request.body.isDiscount : false,
             price_from : request.body.price_from ? request.body.price_from: null,
@@ -39,7 +39,7 @@ async function index(request, response) {
             star_to : request.body.star_to ? request.body.star_to : null,
             rangePrice : request.body.rangePrice ? request.body.rangePrice : null
         }
-        // console.log(params)
+        console.log(params)
         const queryResult = await getListProduct(startIndex, limit, params);
         
         queryResult.rows.forEach(async element => {
@@ -47,20 +47,20 @@ async function index(request, response) {
             if(element.discount > 0)
                 element.price = Math.ceil(element.price * (100 - element.discount)/100)
             
-            const productId = element.id
+            // const productId = element.id
 
-            // // console.log(productId)
+            // // // console.log(productId)
 
-            // const queryProductDetail = await getDetailByProductById(productId)
-            // const queryProductImage = await getImageByProductById(productId)
+            // // const queryProductDetail = await getDetailByProductById(productId)
+            // // const queryProductImage = await getImageByProductById(productId)
             
-            // element.productDetails = queryProductDetail.rows
-            // element.productImages = queryProductImage.rows
+            // // element.productDetails = queryProductDetail.rows
+            // // element.productImages = queryProductImage.rows
 
             
-            const result = showById(request.params.id, )
+            // const result = showById(request.params.id, )
         });
-        console.log(queryResult.rows[6].length)
+        // console.log(queryResult.rows[6].length)
         queryResult.count = queryResult.rows.length
         return response.status(200).json(queryResult);
     } catch (error) {
