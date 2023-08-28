@@ -1,14 +1,31 @@
 const express = require("express");
 const cartController = require("../controllers/api/cart.controller");
+const checkRoleMiddleware = require("../middleware/check-role");
 
 const router = express.Router();
 
-router.post("/add-to-cart", cartController.add);
+router.post(
+  "/add-to-cart",
+  checkRoleMiddleware.checkRoleUser,
+  cartController.add
+);
 
-router.get("/user-cart", cartController.getByUserId);
+router.get(
+  "/user-cart",
+  checkRoleMiddleware.checkRoleUser,
+  cartController.getByUserId
+);
 
-router.patch("/update-cart", cartController.update);
+router.patch(
+  "/update-cart",
+  checkRoleMiddleware.checkRoleUser,
+  cartController.update
+);
 
-router.delete("/delete-cart-item/:cartId", cartController.deleteById);
+router.delete(
+  "/delete-cart-item/:cartId",
+  checkRoleMiddleware.checkRoleUser,
+  cartController.deleteById
+);
 
 module.exports = router;
