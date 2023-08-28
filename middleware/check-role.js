@@ -4,7 +4,8 @@ const jwt = require("jsonwebtoken");
 
 async function checkRoleUser(request, response, next) {
   try {
-    const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY);
+    const token = request.headers.authorization.split(" ")[1];
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const requestRole = decode.isAdmin;
 
     // Check if request user is admin or not
@@ -25,7 +26,8 @@ async function checkRoleUser(request, response, next) {
 
 async function checkRoleAdmin(request, response, next) {
   try {
-    const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY);
+    const token = request.headers.authorization.split(" ")[1];
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const requestRole = decode.isAdmin;
     // Check if request user is admin or not
     if (requestRole != ADMIN_ROLE) {
