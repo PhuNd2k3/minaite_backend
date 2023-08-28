@@ -7,9 +7,15 @@ async function showDetailByProductById(ProductId)
 {
     return models.ProductDetail.findAndCountAll({
         where: { product_id: ProductId },
+        attributes: ['size','color','quan_in_stock'],
     });
+}
+
+async function create(newProductDetail) {
+    return models.ProductDetail.create(newProductDetail);
 }
 
 module.exports = {
     getDetailByProductById : showDetailByProductById,
+    addProductDetails : create
 }

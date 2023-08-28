@@ -7,9 +7,15 @@ async function showImageByProducById(ProductId)
 {
     return models.ProductImage.findAndCountAll({
         where: { product_id: ProductId },
+        attributes: ['image'],
     });
+}
+
+async function create(newProductImage) {
+    return models.ProductImage.create(newProductImage);
 }
 
 module.exports = {
     getImageByProductById : showImageByProducById,
+    addProductImage : create
 }

@@ -11,56 +11,66 @@ const {
 
 const {
     getDetailByProductById,
-    // addProductDetails,
+    addProductDetails,
 } = require("../CRUD/productDetail")
 
 const {
     getImageByProductById,
-    // addProductImage,
+    addProductImage,
 } = require("../CRUD/productImage")
 
 async function index(request, response) {
     try {
         const page = Number.parseInt(request.query.page);
         const limit = Number.parseInt(request.query.limit);
-        
-        // console.log(request.body.txt_search)
 
         const startIndex = (page - 1) * limit;
         
         const params = {
-            isMall : request.body.isMall ? request.body.isMall : false,
+            isMall : request.query.isMall ? request.query.isMall : false,
             txt_search : request.query.txt_search ? request.query.txt_search.trim() : '',
-            categoryInfo : request.body.categoryInfo ? request.body.categoryInfo.trim() : '',
-            isDiscount : request.body.isDiscount ? request.body.isDiscount : false,
-            price_from : request.body.price_from ? request.body.price_from: null,
-            price_to : request.body.price_to ? request.body.price_to : null,
-            star_from : request.body.star_from ? request.body.star_from : null,
-            star_to : request.body.star_to ? request.body.star_to : null,
-            rangePrice : request.body.rangePrice ? request.body.rangePrice : null
+            categoryInfo : request.query.categoryInfo ? request.query.categoryInfo.trim() : '',
+            isDiscount : request.query.isDiscount ? request.query.isDiscount : false,
+            price_from : request.query.price_from ? request.query.price_from: null,
+            price_to : request.query.price_to ? request.query.price_to : null,
+            star_from : request.query.star_from ? request.query.star_from : null,
+            star_to : request.query.star_to ? request.query.star_to : null,
+            rangePrice : request.query.rangePrice ? request.query.rangePrice : null
         }
-        console.log(params)
+        // console.log(params)
         const queryResult = await getListProduct(startIndex, limit, params);
         
-        queryResult.rows.forEach(async element => {
+        // queryResult.rows.forEach(async element => {
             
+        //     if(element.discount > 0)
+        //         element.price = Math.ceil(element.price * (100 - element.discount)/100)
+            
+        //     const productId = element.id
+
+        //     // console.log(productId)
+
+        //     // const queryProductDetail = await getDetailByProductById(productId)
+        //     // const queryProductImage = await getImageByProductById(productId)
+            
+
+        //     // console.log(queryProductDetail.dataValues)
+        //     // console.log(queryProductImage.dataValues)
+
+        //     // element.productDetails = queryProductDetail.rows
+        //     // element.productImages = queryProductImage.rows
+
+            
+        //     // const result = showById(request.params.id, )
+        // });
+
+
+        for(let i = 0 ; i < queryResult.rows.length;i++)
+        {
+            let element = queryResult.rows[i];
             if(element.discount > 0)
-                element.price = Math.ceil(element.price * (100 - element.discount)/100)
-            
-            // const productId = element.id
-
-            // // // console.log(productId)
-
-            // // const queryProductDetail = await getDetailByProductById(productId)
-            // // const queryProductImage = await getImageByProductById(productId)
-            
-            // // element.productDetails = queryProductDetail.rows
-            // // element.productImages = queryProductImage.rows
-
-            
-            // const result = showById(request.params.id, )
-        });
-        // console.log(queryResult.rows[6].length)
+                queryResult.rows[i] = { ...queryResult.rows[i],  Saleprice : Math.ceil(element.price * (100 - element.discount)/100)}
+        }
+        
         queryResult.count = queryResult.rows.length
         return response.status(200).json(queryResult);
     } catch (error) {
