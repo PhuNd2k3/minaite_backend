@@ -13,9 +13,10 @@ const Product = models.Product;
 
 async function add(request, response) {
   try {
+    const token = request.headers.authorization.split(" ")[1];
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const newCart = {
       user_id: decode.id,
-      // user_id: 11,
       product_detail_id: request.body.product_detail_id,
       quantity: request.body.quantity,
     };
