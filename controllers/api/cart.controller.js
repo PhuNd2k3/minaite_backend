@@ -39,15 +39,12 @@ async function add(request, response) {
         }
 
         // Process Existed ProductDetail in Cart
-
         const existed_Cart = await models.Cart.findOne({
             where: {
                 user_id: decode.id,
                 product_detail_id: request.body.product_detail_id,
             },
         });
-
-        console.log(existed_Cart.dataValues.id)
 
         if (existed_Cart) {
             const updateCart = {
@@ -56,9 +53,6 @@ async function add(request, response) {
                 quantity:
                     existed_Cart.dataValues.quantity + request.body.quantity,
             };
-
-            console.log(updateCart);
-            // console.log(request.body.quantity)
 
             updateCartById(updateCart, existed_Cart.dataValues.id)
             return response.status(200).json({
@@ -71,8 +65,6 @@ async function add(request, response) {
             productDetail.Product.price *
             (1 - productDetail.Product.discount / 100);
         newCart["total_price"] = newCart.quantity * unitPrice;
-
-        // console.log(newCart["total_price"])
 
         //Validate new Cart's data
         const validateResponse = validators.validateCart(newCart);
