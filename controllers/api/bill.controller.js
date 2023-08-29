@@ -9,11 +9,12 @@ const {
 } = require("../CRUD/bill")
 
 const {
-    addNewBillDetal,
-    getBillDetalByBillId,
-    getBillDetalById,
-    softDeleteBillDetalById,
-    updateBillDetalById
+    addNewBillDetail,
+    getBillDetailByBillId,
+    getBillDetailById,
+    softDeleteBillDetailById,
+    updateBillDetailById,
+    getBillDetailByUserId
 } = require("../CRUD/billDetail")
 const jwt = require("jsonwebtoken");
 
@@ -22,7 +23,13 @@ async function getByUserId(request, response)
     try {
         const token = request.headers.authorization.split(" ")[1];
         const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        const dbBill = await getBillByUserId(decode.id);
+
+        const page = Number.parseInt(request.query.page);
+        const limit = Number.parseInt(request.query.limit);
+
+        const startIndex = (page - 1) * limit;
+
+        const dbBill = await getBillByUserId(decode.id, startIndex, limit);
         
         if (dbBill.rows.length === 0) {
             return response.status(201).json({
@@ -35,10 +42,42 @@ async function getByUserId(request, response)
         {
             let element = dbBill.rows[i];
 
-            const queryBillDetail = await getBillDetalByBillId(element.dataValues.id);
+            const queryBillDetail = await getBillDetailByBillId(element.dataValues.id);
+            // console.log(element.dataValues.id)
 
             element.dataValues.details = queryBillDetail.rows
         }
+        return response.status(200).json(dbBill);
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        })
+    }
+}
+
+async function showBillDetailByUserId(request, response)
+{
+    try {
+        const token = request.headers.authorization.split(" ")[1];
+        const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+        const page = Number.parseInt(request.query.page);
+        const limit = Number.parseInt(request.query.limit);
+
+        const startIndex = (page - 1) * limit;
+
+        const dbBill = await getBillDetailByUserId(decode.id,startIndex, limit);
+        // console.log(dbBill.length)
+        
+
+        if (dbBill.length === 0) {
+            return response.status(201).json({
+                message: "This user has billDetail",
+                bill: dbBill,
+            });
+        }
+        
         return response.status(200).json(dbBill);
     } catch (error) {
         return response.status(500).json({
@@ -105,7 +144,7 @@ async function addBill(request, response)
                 })
             }
 
-            await addNewBillDetal(newBilldetail)
+            await addNewBillDetail(newBilldetail)
         }
 
         return response.status(200).json({
@@ -124,7 +163,7 @@ async function updateBill(request, response)
 {
     try {
         const billId = request.params.id;
-        const dbBill = await getBillById(BillId);
+        const dbBill = await getBillById(billId);
 
         if (dbBill) {
 
@@ -172,7 +211,7 @@ async function updateBill(request, response)
 async function deleteById(request, response)
 {
     try {
-        const bill = await getBillById(request.params.billId)
+        const bill = await getBillById(request.params.id)
         if(!bill)
             return response.status(403).json({
                 message : "Can't find this bill"
@@ -182,7 +221,7 @@ async function deleteById(request, response)
                 .status(404)
                 .json({ message: "This bill has been deleted" });
         }
-        softDeleteCartById(request.params.cartId)
+        softDeleteBillById(request.params.id)
 
         return response.status(200).json({
             message: "Delete bill successfully!",
@@ -199,6 +238,7 @@ async function deleteById(request, response)
 module.exports = 
 {
     getByUserId : getByUserId,
+    getBillDetailByUserId : showBillDetailByUserId,
     addBill : addBill,
     updateBill : updateBill,
     deleteById : deleteById,

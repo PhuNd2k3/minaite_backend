@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.get('/all_bill', billController.getByUserId)
 
+router.get('/all_billDetail', billController.getBillDetailByUserId)
+
 router.post('/', billController.addBill)
 
 router.patch('/:id', billController.updateBill)

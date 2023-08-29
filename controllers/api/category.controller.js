@@ -35,7 +35,7 @@ async function index(request, response) {
             isDeleted: request.query.is_deleted ? request.query.is_deleted : null,
         }
 
-        console.log(params)
+        // console.log(params)
 
         const queryResult = await getListCategory(startIndex, limit, params)
 
