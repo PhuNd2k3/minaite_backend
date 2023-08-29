@@ -37,38 +37,22 @@ async function index(request, response) {
             star_to : request.query.star_to ? request.query.star_to : null,
             rangePrice : request.query.rangePrice ? request.query.rangePrice : null
         }
-        // console.log(params)
         const queryResult = await getListProduct(startIndex, limit, params);
-        
-        // queryResult.rows.forEach(async element => {
-            
-        //     if(element.discount > 0)
-        //         element.price = Math.ceil(element.price * (100 - element.discount)/100)
-            
-        //     const productId = element.id
-
-        //     // console.log(productId)
-
-        //     // const queryProductDetail = await getDetailByProductById(productId)
-        //     // const queryProductImage = await getImageByProductById(productId)
-            
-
-        //     // console.log(queryProductDetail.dataValues)
-        //     // console.log(queryProductImage.dataValues)
-
-        //     // element.productDetails = queryProductDetail.rows
-        //     // element.productImages = queryProductImage.rows
-
-            
-        //     // const result = showById(request.params.id, )
-        // });
-
-
+    
         for(let i = 0 ; i < queryResult.rows.length;i++)
         {
             let element = queryResult.rows[i];
-            if(element.discount > 0)
-                queryResult.rows[i] = { ...queryResult.rows[i],  Saleprice : Math.ceil(element.price * (100 - element.discount)/100)}
+            // Process Sale price
+            if(element.dataValues.discount > 0)
+                element.dataValues.saleprice = Math.ceil(element.price * (100 - element.discount)/100)
+            else
+                element.dataValues.Saleprice = element.dataValues.price
+
+                const queryProductDetail = await getDetailByProductById(element.dataValues.id)
+                const queryProductImage = await getImageByProductById(element.dataValues.id)
+
+            element.dataValues.details = queryProductDetail.rows
+            element.dataValues.images = queryProductImage.rows
         }
         
         queryResult.count = queryResult.rows.length
