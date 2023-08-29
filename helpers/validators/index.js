@@ -11,6 +11,8 @@ const validateCategory = (category) => validator.validate(category, schemas.cate
 const validateProduct = (product) => validator.validate(product, schemas.productSchema)
 const validateFeedBack = (feedback) => validator.validate(feedback, schemas.feedbackSchema)
 const validateCart = (cart) => validator.validate(cart, schemas.cartSchema)
+const validateBill = (bill) => validator.validate(bill, schemas.billSchema)
+const validateBillDetail = (billDetail) => validator.validate(billDetail, schemas.billDetailSchema)
 
 module.exports = {
     validateUser: validateUser,
@@ -18,5 +20,7 @@ module.exports = {
     validateCategory : validateCategory,
     validateProduct : validateProduct,
     validateFeedBack: validateFeedBack,
-    validateCart: validateCart,
+    validateCart : validateCart,
+    validateBill : validateBill,
+    validateBillDetail : validateBillDetail 
 }
