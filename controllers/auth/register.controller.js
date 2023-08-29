@@ -56,7 +56,7 @@ async function register(request, response) {
             }
 
             const token = jwt.sign(
-                { id: result.id, email: request.body.email },
+                { id: result.id, email: request.body.email, isAdmin : false },
                 process.env.JWT_SECRET_KEY,
                 {
                   expiresIn: "1h",

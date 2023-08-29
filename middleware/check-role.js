@@ -4,18 +4,18 @@ const jwt = require("jsonwebtoken");
 
 async function checkRoleUser(request, response, next) {
   try {
-    const token = request.headers.authorization.split(" ")[1];
+    const token = request.query.token;
+    console.log(token)
     const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const requestRole = decode.isAdmin;
 
     // Check if request user is admin or not
-    if (requestRole != ADMIN_ROLE) {
-      if (requestRole != USER_ROLE) {
-        return response.status(400).json({
-          message: "Invalid role!",
-        });
-      } else next();
+    if (requestRole != USER_ROLE) {
+      return response.status(400).json({
+        message: "Invalid role!",
+      });
     } else next();
+
   } catch (error) {
     return response.status(401).json({
       message: "Something went wrong!",
