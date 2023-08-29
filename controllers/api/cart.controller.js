@@ -4,6 +4,7 @@ const {
     getAllByUserId,
     updateCartById,
     getByCartId,
+    getCartByUserIdAndPDID,
 } = require("../CRUD/cart");
 
 const jwt = require("jsonwebtoken");
@@ -30,15 +31,48 @@ async function add(request, response) {
                 },
             ],
         });
+
         if (newCart.quantity > productDetail.quan_in_stock) {
             return response.status(402).json({
                 message: "Exceed the quantity in stock",
             });
         }
+
+        // Process Existed ProductDetail in Cart
+
+        const existed_Cart = await models.Cart.findOne({
+            where: {
+                user_id: decode.id,
+                product_detail_id: request.body.product_detail_id,
+            },
+        });
+
+        console.log(existed_Cart.dataValues.id)
+
+        if (existed_Cart) {
+            const updateCart = {
+                user_id: decode.id,
+                product_detail_id: request.body.product_detail_id,
+                quantity:
+                    existed_Cart.dataValues.quantity + request.body.quantity,
+            };
+
+            console.log(updateCart);
+            // console.log(request.body.quantity)
+
+            updateCartById(updateCart, existed_Cart.dataValues.id)
+            return response.status(200).json({
+                message:
+                    "This product detail has been already in your cart and it has been updated",
+            });
+        }
+
         const unitPrice =
             productDetail.Product.price *
             (1 - productDetail.Product.discount / 100);
         newCart["total_price"] = newCart.quantity * unitPrice;
+
+        // console.log(newCart["total_price"])
 
         //Validate new Cart's data
         const validateResponse = validators.validateCart(newCart);
@@ -77,12 +111,10 @@ async function getByUserId(request, response) {
         const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const cart = await getAllByUserId(decode.id);
         if (cart.length === 0) {
-            return response
-                .status(201)
-                .json({
-                    message: "This user has no products in the cart",
-                    cart: cart,
-                });
+            return response.status(201).json({
+                message: "This user has no products in the cart",
+                cart: cart,
+            });
         }
         return response.status(200).json({ message: "Success!", cart: cart });
     } catch (error) {

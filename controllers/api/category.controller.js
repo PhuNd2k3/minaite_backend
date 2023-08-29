@@ -11,28 +11,28 @@ const {
 
 async function index(request, response) {
     try {
-        const page = Number.parseInt(request.body.page)
-        const limit = Number.parseInt(request.body.limit)
+        const page = Number.parseInt(request.query.page)
+        const limit = Number.parseInt(request.query.limit)
 
         const startIndex = (page - 1) * limit
 
         const params = {
-            txt_search: request.body.txt_search
-                ? request.body.txt_search.trim()
+            txt_search: request.query.txt_search
+                ? request.query.txt_search.trim()
                 : "",
-            delete_to_date: request.body.delete_to_date
-                ? request.body.delete_to_date.trim() + " 00:00:00"
+            delete_to_date: request.query.delete_to_date
+                ? request.query.delete_to_date.trim() + " 00:00:00"
                 : null,
-            delete_from_date: request.body.delete_from_date
-                ? request.body.delete_from_date.trim() + " 00:00:00"
+            delete_from_date: request.query.delete_from_date
+                ? request.query.delete_from_date.trim() + " 00:00:00"
                 : null,
-            create_to_date: request.body.create_to_date
-                ? request.body.create_to_date.trim() + " 00:00:00"
+            create_to_date: request.query.create_to_date
+                ? request.query.create_to_date.trim() + " 00:00:00"
                 : null,
-            create_from_date: request.body.create_from_date
-                ? request.body.create_from_date.trim() + " 00:00:00"
+            create_from_date: request.query.create_from_date
+                ? request.query.create_from_date.trim() + " 00:00:00"
                 : null,
-            isDeleted: request.body.is_deleted ? request.body.is_deleted : null,
+            isDeleted: request.query.is_deleted ? request.query.is_deleted : null,
         }
 
         console.log(params)

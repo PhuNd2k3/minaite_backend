@@ -47,6 +47,8 @@ async function update(updateCart, id) {
 
     updateCart['total_price'] = updateCart.quantity* cartDetail.ProductDetail.Product.price * (1 - cartDetail.ProductDetail.Product.discount / 100)
 
+    // console.log(updateCart, id)
+
     return models.Cart.update(updateCart, { 
         where: {
             id: id,
@@ -72,6 +74,15 @@ async function getAllByUserId(userId){
     })
 }
 
+async function getCartByUserIdAndPDID(userId, PDID)
+{
+    return await models.Cart.findOne({
+        where : {
+            user_id : userId,
+            product_detail_id : PDID
+        },
+    })
+}
 
 module.exports = {
     getByCartId: showById,
@@ -79,5 +90,6 @@ module.exports = {
     getAllByUserId: getAllByUserId,
     updateCartById: update,
     softDeleteCartById: destroy,
+    getCartByUserIdAndPDID : getCartByUserIdAndPDID
 }
 

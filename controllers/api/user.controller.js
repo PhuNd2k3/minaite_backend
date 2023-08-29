@@ -5,6 +5,7 @@ async function getUserById(request, response) {
   try {
     // const decode = jwt.verify(request.body.token, process.env.JWT_SECRET_KEY);
     const token = request.headers.authorization.split(' ')[1];
+    
     const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
     //Bearer {token}
