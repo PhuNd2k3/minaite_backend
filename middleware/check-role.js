@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 async function checkRoleUser(request, response, next) {
   try {
-    const token = request.query.token;
+    const token = request.headers.authorization.split(' ')[1]
     console.log(token)
     const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const requestRole = decode.isAdmin;
