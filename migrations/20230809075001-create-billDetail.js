@@ -4,14 +4,20 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable("BillDetails", {
+            id : {
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true,
+                type: Sequelize.INTEGER,
+            },
             product_detail_id: {
                 allowNull: false,
-                primaryKey: true,
+                // primaryKey: true,
                 type: Sequelize.INTEGER,
             },
             bill_id: {
                 allowNull: false,
-                primaryKey: true,
+                // primaryKey: true,
                 type: Sequelize.INTEGER,
             },
             quantity: {

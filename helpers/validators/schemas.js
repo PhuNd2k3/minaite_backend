@@ -50,6 +50,27 @@ const cartSchema = {
     total_price: {type: 'number'},
 }
 
+const billSchema = {
+    recipient_info : {type : 'string', optional : true},
+    user_id : {type : 'number'},
+    payment_method : {type : 'string'},
+    transport_method : {type : 'string'},
+    book_status : {type : 'string'},
+    ship_status : {type : 'string'},
+    ship_money : {type : 'number'},
+    ship_discount : {type : 'number'},
+    product_money : {type : 'number'},
+    product_discount : {type : 'number'},
+    total_price : {type : 'number'}
+}
+
+const billDetailSchema = {
+    product_detail_id : {type : 'number'},
+    bill_id : {type : 'number'},
+    quantity : {type : 'number'},
+    total_price : {type : 'number'}
+}
+
 module.exports = {
     userSchema: userSchema,
     walletSchema : walletSchema,
@@ -57,4 +78,6 @@ module.exports = {
     productSchema : productSchema,
     feedbackSchema: feedbackSchema,
     cartSchema: cartSchema,
+    billDetailSchema : billDetailSchema,
+    billSchema : billSchema
 }

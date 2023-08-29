@@ -252,18 +252,18 @@ async function updateById(request, response) {
         if (dbProduct) {
 
             const updateProduct = {
-                category_id : request.body.category_id,
-                product_name : request.body.product_name,
-                price : request.body.price,
-                description : request.body.description,
-                likes : request.body.likes,
-                star : request.body.star,
-                quan_sold : request.body.quan_sold,
-                quan_in_stock : request.body.quan_in_stock,
-                origin : request.body.origin,
-                fromCity : request.body.fromCity,
-                isMall : request.body.isMall,
-                discount : request.body.discount,
+                category_id : request.body.category_id ? request.body.category_id : dbProduct.category_id,
+                product_name : request.body.product_name ? request.body.product_name : dbProduct.product_name,
+                price : request.body.price ? request.body.price : dbProduct.price,
+                description : request.body.description ? request.body.description : dbProduct.description,
+                likes : request.body.likes ? request.body.likes : dbProduct.likes,
+                star : request.body.star ? request.body.star : dbProduct.star,
+                quan_sold : request.body.quan_sold ? request.body.quan_sold : dbProduct.quan_sold,
+                quan_in_stock : request.body.quan_in_stock ? request.body.quan_in_stock : dbProduct.quan_in_stock,
+                origin : request.body.origin ? request.body.origin : dbProduct.origin,
+                fromCity : request.body.fromCity ? request.body.fromCity : dbProduct.fromCity,
+                isMall : request.body.isMall ? request.body.isMall : dbProduct.isMall,
+                discount : request.body.discount ? request.body.discount : dbProduct.discount,
             }
 
             const validateResponse =
