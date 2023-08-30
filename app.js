@@ -18,7 +18,7 @@ app.use(express.json());
 
 const staticPath = path.join(__dirname, 'public');
 
-app.use('/',(req,res) => {
+app.get('/',(req,res) => {
     res.send('Shopee_api')
 })
 
