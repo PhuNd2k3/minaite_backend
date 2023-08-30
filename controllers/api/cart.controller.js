@@ -4,6 +4,7 @@ const {
   getAllByUserId,
   updateCartById,
   getByCartId,
+  softDeleteCartById,
 } = require("../CRUD/cart");
 
 const jwt = require("jsonwebtoken");
