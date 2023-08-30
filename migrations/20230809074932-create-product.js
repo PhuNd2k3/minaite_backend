@@ -23,7 +23,7 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             description: {
-                type: Sequelize.STRING(3000),
+                type: Sequelize.STRING(7000),
             },
             likes: {
                 type: Sequelize.INTEGER,
