@@ -33,7 +33,7 @@ async function getByUserId(request, response)
         
         if (dbBill.rows.length === 0) {
             return response.status(201).json({
-                message: "This user has bill",
+                message: "This user has no bill",
                 bill: dbBill,
             });
         }
@@ -45,7 +45,7 @@ async function getByUserId(request, response)
             const queryBillDetail = await getBillDetailByBillId(element.dataValues.id);
             // console.log(element.dataValues.id)
 
-            element.dataValues.details = queryBillDetail.rows
+            element.dataValues.billDetails = queryBillDetail.rows
         }
         return response.status(200).json(dbBill);
     } catch (error) {
@@ -102,8 +102,8 @@ async function addBill(request, response)
             ship_status : request.body.ship_status,
             ship_money : request.body.ship_money,
             ship_discount : request.body.ship_discount,
-            Bill_money : request.body.Bill_money,
-            Bill_discount : request.body.Bill_discount,
+            product_money : request.body.product_discount,
+            product_discount : request.body.product_discount,
             total_price : request.body.total_price,
         }
         
@@ -129,7 +129,7 @@ async function addBill(request, response)
 
         for(var detail in details){
             const newBilldetail = {
-                Bill_detail_id : detail.Bill_detail_id,
+                product_detail_id : detail.product_detail_id,
                 bill_id : dbNewBill.id,
                 quantity : detail.quantity,
                 total_price : detail.total_price
@@ -176,8 +176,8 @@ async function updateBill(request, response)
                 ship_status : request.body.ship_status,
                 ship_money : request.body.ship_money,
                 ship_discount : request.body.ship_discount,
-                Bill_money : request.body.Bill_money,
-                Bill_discount : request.body.Bill_discount,
+                product_money : request.body.product_money,
+                product_discount : request.body.product_discount,
                 total_price : request.body.total_price,
             }
 
