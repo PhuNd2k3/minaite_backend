@@ -1,16 +1,47 @@
 {
-    "version" : 2,
-    "name" : "shopee_website_backend",
-    "builds" : [
+    "version": 2,
+    "builds": [
         {
-            "src" : "server.js",
-            "use" : "@vercel/node"
+            "src": "app.js",
+            "use": "@vercel/node"
         }
     ],
-    "routes" : [
+    "routes": [
         {
-            "src" : "/(.*)",
-            "dest" : "/server.js"
+            "src": "/api/auth/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/api/product/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/api/category/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/api/feedback/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/api/cart/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/api/admin/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/api/user/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/api/bill/(.*)",
+            "dest": "app.js"
+        },
+        {
+            "src": "/public/(.*)",
+            "dest": "public/$1"
         }
     ]
 }
