@@ -18,6 +18,10 @@ const {
 } = require("../CRUD/billDetail")
 const jwt = require("jsonwebtoken");
 
+const {
+    showUserById
+} = require("../CRUD/user")
+
 async function getByUserId(request, response)
 {
     try {
@@ -93,18 +97,32 @@ async function addBill(request, response)
         const token = request.headers.authorization.split(" ")[1];
         const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
+        const queryCus = showUserById(decode.id)
+
+        
         const newBill = {
-            recipient_info : request.body.recipient_info,
+            // recipient_info : request.body.recipient_info,
             user_id : decode.id,
-            payment_method : request.body.payment_method,
-            transport_method : request.body.transport_method,
-            book_status : request.body.book_status,
-            ship_status : request.body.ship_status,
-            ship_money : request.body.ship_money,
-            ship_discount : request.body.ship_discount,
-            product_money : request.body.product_discount,
-            product_discount : request.body.product_discount,
-            total_price : request.body.total_price,
+            // payment_method : request.body.payment_method,
+            // transport_method : request.body.transport_method,
+            // book_status : request.body.book_status,
+            // ship_status : request.body.ship_status,
+            // ship_money : request.body.ship_money,
+            // ship_discount : request.body.ship_discount,
+            product_money : request.body.product_money,
+            // product_discount : request.body.product_discount,
+            // total_price : request.body.total_price,
+            
+            // Fixed dữ liệu
+            payment_method : "Thanh toán khi nhận hàng",
+            transport_method : "Vận chuyển nhanh",
+            book_status : "Chưa thanh toán",
+            ship_status : "Đang vận chuyển",
+            ship_money : 32000,
+            ship_discount : 0,
+            product_discount : 0,
+            total_price : (request.body.product_money + 32000),
+            recipient_info : queryCus.name
         }
         
         // Xử lý total_money, shipMoney ( tính theo số km )
@@ -127,7 +145,8 @@ async function addBill(request, response)
 
         const dbNewBill = await addNewBill(newBill)
 
-        for(var detail in details){
+        for(let i = 0 ; i < details.length ; i ++){
+            const detail = details[i]
             const newBilldetail = {
                 product_detail_id : detail.product_detail_id,
                 bill_id : dbNewBill.id,
