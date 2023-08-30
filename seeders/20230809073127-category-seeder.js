@@ -15,6 +15,10 @@ module.exports = {
                     image: "http://localhost:8000/images/categories/phone.png",
                 },
                 {
+                    name: "Thời trang nữ",
+                    image: "http://localhost:8000/images/categories/female_fashion.png",
+                },
+                {
                     name: "Thiết bị điện tử",
                     image: "http://localhost:8000/images/categories/electronic_device.png",
                 },
@@ -45,10 +49,6 @@ module.exports = {
                 {
                     name: "Ô tô & xe máy & xe đạp",
                     image: "http://localhost:8000/images/categories/motorbike.png",
-                },
-                {
-                    name: "Thời trang nữ",
-                    image: "http://localhost:8000/images/categories/female_fashion.png",
                 },
                 {
                     name: "Mẹ & Bé",
