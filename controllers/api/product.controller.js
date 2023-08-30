@@ -131,6 +131,22 @@ async function showSaleProducts(request, response) {
                 element.price = Math.ceil(element.price * (100 - element.discount)/100)
         });
 
+        for(let i = 0 ; i < queryResult.rows.length;i++)
+        {
+            let element = queryResult.rows[i];
+            // Process Sale price
+            if(element.dataValues.discount > 0)
+                element.dataValues.saleprice = Math.ceil(element.price * (100 - element.discount)/100)
+            else
+                element.dataValues.Saleprice = element.dataValues.price
+
+                const queryProductDetail = await getDetailByProductById(element.dataValues.id)
+                const queryProductImage = await getImageByProductById(element.dataValues.id)
+
+            element.dataValues.details = queryProductDetail.rows
+            element.dataValues.images = queryProductImage.rows
+        }
+
         return response.status(200).json(queryResult);
     } catch (error) {
         return response.status(500).json({
