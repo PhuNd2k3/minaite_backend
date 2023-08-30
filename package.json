@@ -3,7 +3,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "nodemon ./server.js"
+    "start": "nodemon ./server.js",
+    "vercel-build": "echo helloworld"
   },
   "dependencies": {
     "@babel/core": "^7.22.9",
