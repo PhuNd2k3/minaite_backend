@@ -8,6 +8,7 @@ async function checkRoleUser(request, response, next) {
     const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
     const requestRole = decode.isAdmin;
 
+    // Check if request user is admin or not
     if (requestRole != ADMIN_ROLE) {
       if (requestRole != USER_ROLE) {
         return response.status(400).json({

@@ -41,11 +41,11 @@ yarn sequelize-cli db:migrate
 
 -> using npm
 
-npx sequelize-cli db:migrate:undo
+npx sequelize-cli db:migrate:undo:all
 
 -> using yarn
 
-yarn sequelize-cli db:migrate:undo
+yarn sequelize-cli db:migrate:undo:all
 
 4. Tạo seeders:
 
@@ -73,8 +73,8 @@ yarn sequelize-cli db:seed:all
 
 -> using npm
 
-npx sequelize-cli db:seed:undo
+npx sequelize-cli db:seed:undo:all
 
 -> using yarn
 
-yarn sequelize-cli db:seed:undo
+yarn sequelize-cli db:seed:undo:all

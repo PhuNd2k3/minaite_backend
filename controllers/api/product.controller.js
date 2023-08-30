@@ -11,56 +11,50 @@ const {
 
 const {
     getDetailByProductById,
-    // addProductDetails,
+    addProductDetails,
 } = require("../CRUD/productDetail")
 
 const {
     getImageByProductById,
-    // addProductImage,
+    addProductImage,
 } = require("../CRUD/productImage")
 
 async function index(request, response) {
     try {
         const page = Number.parseInt(request.query.page);
         const limit = Number.parseInt(request.query.limit);
-        
-        // console.log(request.body.txt_search)
 
         const startIndex = (page - 1) * limit;
         
         const params = {
-            isMall : request.body.isMall ? request.body.isMall : false,
+            isMall : request.query.isMall ? request.query.isMall : false,
             txt_search : request.query.txt_search ? request.query.txt_search.trim() : '',
-            categoryInfo : request.body.categoryInfo ? request.body.categoryInfo.trim() : '',
-            isDiscount : request.body.isDiscount ? request.body.isDiscount : false,
-            price_from : request.body.price_from ? request.body.price_from: null,
-            price_to : request.body.price_to ? request.body.price_to : null,
-            star_from : request.body.star_from ? request.body.star_from : null,
-            star_to : request.body.star_to ? request.body.star_to : null,
-            rangePrice : request.body.rangePrice ? request.body.rangePrice : null
+            categoryInfo : request.query.categoryInfo ? request.query.categoryInfo.trim() : '',
+            isDiscount : request.query.isDiscount ? request.query.isDiscount : false,
+            price_from : request.query.price_from ? request.query.price_from: null,
+            price_to : request.query.price_to ? request.query.price_to : null,
+            star_from : request.query.star_from ? request.query.star_from : null,
+            star_to : request.query.star_to ? request.query.star_to : null,
+            rangePrice : request.query.rangePrice ? request.query.rangePrice : null
         }
-        console.log(params)
         const queryResult = await getListProduct(startIndex, limit, params);
+    
+        for(let i = 0 ; i < queryResult.rows.length;i++)
+        {
+            let element = queryResult.rows[i];
+            // Process Sale price
+            if(element.dataValues.discount > 0)
+                element.dataValues.saleprice = Math.ceil(element.price * (100 - element.discount)/100)
+            else
+                element.dataValues.Saleprice = element.dataValues.price
+
+                const queryProductDetail = await getDetailByProductById(element.dataValues.id)
+                const queryProductImage = await getImageByProductById(element.dataValues.id)
+
+            element.dataValues.details = queryProductDetail.rows
+            element.dataValues.images = queryProductImage.rows
+        }
         
-        queryResult.rows.forEach(async element => {
-            
-            if(element.discount > 0)
-                element.price = Math.ceil(element.price * (100 - element.discount)/100)
-            
-            // const productId = element.id
-
-            // // // console.log(productId)
-
-            // // const queryProductDetail = await getDetailByProductById(productId)
-            // // const queryProductImage = await getImageByProductById(productId)
-            
-            // // element.productDetails = queryProductDetail.rows
-            // // element.productImages = queryProductImage.rows
-
-            
-            // const result = showById(request.params.id, )
-        });
-        // console.log(queryResult.rows[6].length)
         queryResult.count = queryResult.rows.length
         return response.status(200).json(queryResult);
     } catch (error) {
@@ -258,18 +252,18 @@ async function updateById(request, response) {
         if (dbProduct) {
 
             const updateProduct = {
-                category_id : request.body.category_id,
-                product_name : request.body.product_name,
-                price : request.body.price,
-                description : request.body.description,
-                likes : request.body.likes,
-                star : request.body.star,
-                quan_sold : request.body.quan_sold,
-                quan_in_stock : request.body.quan_in_stock,
-                origin : request.body.origin,
-                fromCity : request.body.fromCity,
-                isMall : request.body.isMall,
-                discount : request.body.discount,
+                category_id : request.body.category_id ? request.body.category_id : dbProduct.category_id,
+                product_name : request.body.product_name ? request.body.product_name : dbProduct.product_name,
+                price : request.body.price ? request.body.price : dbProduct.price,
+                description : request.body.description ? request.body.description : dbProduct.description,
+                likes : request.body.likes ? request.body.likes : dbProduct.likes,
+                star : request.body.star ? request.body.star : dbProduct.star,
+                quan_sold : request.body.quan_sold ? request.body.quan_sold : dbProduct.quan_sold,
+                quan_in_stock : request.body.quan_in_stock ? request.body.quan_in_stock : dbProduct.quan_in_stock,
+                origin : request.body.origin ? request.body.origin : dbProduct.origin,
+                fromCity : request.body.fromCity ? request.body.fromCity : dbProduct.fromCity,
+                isMall : request.body.isMall ? request.body.isMall : dbProduct.isMall,
+                discount : request.body.discount ? request.body.discount : dbProduct.discount,
             }
 
             const validateResponse =

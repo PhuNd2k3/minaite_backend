@@ -9,16 +9,6 @@ const include = [
         attributes: ["name"],
         as: "Category",
     },
-    // {
-    //     model: models.ProductDetail,
-    //     attributes : ["size", "color", "quan_in_stock"],
-    //     as: "ProductDetail",
-    // },
-    // {
-    //     model: models.ProductImage,
-    //     attributes : ["image"],
-    //     as: "ProductImage",
-    // }
 ];
 
 async function index(startIndex, limit, params) {
