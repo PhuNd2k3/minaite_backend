@@ -9,6 +9,9 @@ const validateUser = (user) => validator.validate(user, schemas.userSchema)
 const validateWallet = (wallet) => validator.validate(wallet, schemas.walletSchema)
 const validateCategory = (category) => validator.validate(category, schemas.categorySchema)
 const validateProduct = (product) => validator.validate(product, schemas.productSchema)
+const validateProductImage = (productImage) => validator.validate(productImage, schemas.productImageSchema)
+const validateProductDetail = (productDetail) => validator.validate(productDetail, schemas.productDetailSchema)
+
 const validateFeedBack = (feedback) => validator.validate(feedback, schemas.feedbackSchema)
 const validateCart = (cart) => validator.validate(cart, schemas.cartSchema)
 const validateBill = (bill) => validator.validate(bill, schemas.billSchema)
@@ -22,5 +25,7 @@ module.exports = {
     validateFeedBack: validateFeedBack,
     validateCart : validateCart,
     validateBill : validateBill,
-    validateBillDetail : validateBillDetail 
+    validateBillDetail : validateBillDetail,
+    validateProductImage : validateProductImage,
+    validateProductDetail : validateProductDetail,
 }

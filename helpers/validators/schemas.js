@@ -35,6 +35,18 @@ const productSchema = {
     discount : {type : 'number', max: 100, min:0, optional : true},
 }
 
+const productImageSchema = {
+    product_id : {type : 'number'},
+    image : {type : 'string'}
+}
+
+const productDetailSchema = {
+    product_id : {type : 'number'},
+    size : {type : 'string', optional : true},
+    color : {type : 'string', optional : true},
+    quan_in_stock : {type : 'number'}
+}
+
 const feedbackSchema = {
     user_id: {type: 'number'},
     product_id: {type: 'number'},
@@ -76,6 +88,8 @@ module.exports = {
     walletSchema : walletSchema,
     categorySchema : categorySchema,
     productSchema : productSchema,
+    productImageSchema : productImageSchema,
+    productDetailSchema : productDetailSchema,
     feedbackSchema: feedbackSchema,
     cartSchema: cartSchema,
     billDetailSchema : billDetailSchema,

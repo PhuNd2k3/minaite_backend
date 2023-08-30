@@ -6,6 +6,7 @@ module.exports = {
         await queryInterface.bulkInsert(
             "ProductImages",
             [
+                // Clothes
                 {
                     product_id: 1,
                     image:
@@ -326,6 +327,33 @@ module.exports = {
                     product_id: 10,
                     image:
                         "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lgagh6d1yb1m6c",
+                },
+
+                // Phone 
+                {
+                    product_id: 11,
+                    image:
+                        "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljar8kgrltjm0c",
+                },
+                {
+                    product_id: 11,
+                    image:
+                        "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljar8kgrq18y72",
+                },
+                {
+                    product_id: 11,
+                    image:
+                        "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljar8kgrn842f2",
+                },
+                {
+                    product_id: 11,
+                    image:
+                        "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-ljar8kgromoiae",
+                },
+                {
+                    product_id: 11,
+                    image:
+                        "https://down-vn.img.susercontent.com/file/7f26d9703696afb7630c74c75940e76b",
                 },
             ],
             {}
