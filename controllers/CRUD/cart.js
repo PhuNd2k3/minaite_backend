@@ -70,7 +70,7 @@ async function destroy(id) {
 async function getAllByUserId(userId){
     return await models.Cart.findAll({
         where: {user_id: userId },
-        // include: include,
+        include: include,
     })
 }
 
@@ -81,6 +81,7 @@ async function getCartByUserIdAndPDID(userId, PDID)
             user_id : userId,
             product_detail_id : PDID
         },
+        include: include,
     })
 }
 
